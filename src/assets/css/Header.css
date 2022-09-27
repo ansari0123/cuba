@@ -1,0 +1,36 @@
+nav{
+    height: 80px;
+    /* box-shadow: 0 0 2px 0 black ; */
+    /* border-bottom: 1px solid black; */
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding:0 50px;
+}
+.user{
+    display: flex;
+}
+.user img{
+    width: 38px;
+    height: 38px;
+    object-fit: cover;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
+}
+.name_status{
+    margin-left: 16px;
+}
+.name_status .user_name{
+    color: #2B2B2B;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0;
+}
+.name_status .user_status{
+    color: #A0A0A0;
+    font-size: 12px;
+    font-weight: 400;
+}

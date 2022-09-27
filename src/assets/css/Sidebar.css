@@ -1,0 +1,89 @@
+.side_bar{
+    width: 300px;
+    padding: 15px;
+    /* border: 1px solid black */
+    /* box-shadow: 0 0 2px 0 black; */
+    /* border-right: 1px solid black; */
+    height: 100%;
+}
+.brand_wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.brand_wrapper button{
+    background-color: transparent;
+    border: none;
+    background-image: url('../images/side_toggle.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 22px;
+    height: 22px;
+}
+.side_menu{
+    
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-top: 50px;
+}
+.side_menu li{
+    margin-bottom: 28px;
+}
+.side_sub_menu{
+    padding: 0 !important;
+    margin: 0;
+    margin-left: 14px;
+}
+.side_sub_menu li{
+    margin-bottom: 16px !important;
+}
+.accordion-item:first-of-type .accordion-button{
+    padding: 0 !important;
+    box-shadow: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+}
+.accordion-item:first-of-type .accordion-button:focus{
+    padding: 0 !important;
+    box-shadow: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    outline: 0 !important;
+}
+.accordion-body{
+    border:  none !important;
+}
+.accordion-item:last-of-type{
+    border: none !important;
+}
+.side_sub_menu{
+    list-style: none;
+}
+.side_sub_menu li a,.side_menu li a{
+    color: black;
+    font-size: 16px;
+    font-weight: 400;
+    text-decoration: none !important;
+}
+.side_sub_menu li a.active , .side_menu li>a.active{
+    font-weight: bolder;
+}
+.side_sub_menu li a .side_sub_item{
+    padding: 5px 10px;
+    margin-bottom: 0px !important;
+}
+.side_sub_menu li{
+    margin-bottom: 8px !important;
+}
+.side_sub_menu li a.active .side_sub_item{
+    background-color: #F1EFFF;
+    padding: 5px 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
