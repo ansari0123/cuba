@@ -28,7 +28,7 @@ const Retailers = () => {
     const formData = new FormData();
     formData.append("retailer_id", updateData.id);
     formData.append("name", updateData.name);
-    formData.append("logo", updateData.logo);
+    // formData.append("logo", updateData.logo);
     formData.append("subdomain", updateData.subdomain);
     formData.append("categories", updateData.category);
     formData.append("balance", parseInt(updateData.balance));
@@ -325,7 +325,7 @@ const Retailers = () => {
             {retailers?.filter((item) => {
                   if(keywordSearch == ''){
                     return item;
-                  }else if(item.name.toUpperCase().includes(keywordSearch.toLocaleUpperCase())){
+                  }else if(item.name.toUpperCase().includes(keywordSearch.toUpperCase())){
                     return item;
                   }
               }).map((retailer, index) => {

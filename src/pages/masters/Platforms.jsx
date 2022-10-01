@@ -2,6 +2,7 @@ import axios from "../../axios/axios";
 import react, { useState, useEffect } from "react";
 import add_plus from "../../assets/images/add_plus.svg";
 import swal from "sweetalert";
+import upload_image from "../../assets/images/upload_image.svg";
 
 const Platforms = () => {
   const [addData, setAddData] = useState({
@@ -92,7 +93,7 @@ const Platforms = () => {
             <div class="modal-dialog modal-dialog-centered user_modal">
               <div class="modal-content user_modal_content p-2">
                 <div class="modal-header  border-0 d-flex justify-content-center">
-                <h3 className="">Add Platform</h3>
+                  <h3 className="">Add Platform</h3>
                   <button
                     type="button"
                     class="btn-close"
@@ -100,121 +101,427 @@ const Platforms = () => {
                     aria-label="Close"
                   ></button>
                 </div>
-                <div class="modal-body  ">{step == 1 ? <>
-                  <div className="step_container">
-                   
-                    <div className="row">
-                      <div className="col-6">
-                      <div className="input_box mt-3">
-                        <label htmlFor="email" className="input_label">
-                        Retailer   
-                        </label>
-                        <input
-                          type="email"
-                          class="form-control"
-                          id="email"
-                        
-                        ></input>
+                <div class="modal-body  ">
+                  {step == 1 ? (
+                    <>
+                      <div className="step_container">
+                        <div className="row">
+                          <div className="col-6">
+                            <div className="input_box mt-3">
+                              <label htmlFor="email" className="input_label">
+                                Retailer
+                              </label>
+                              <input
+                                type="email"
+                                class="form-control"
+                                id="email"
+                              ></input>
+                            </div>
+                            <div className="input_box mt-3">
+                              <label htmlFor="email" className="input_label">
+                                Logo
+                              </label>
+                              <input
+                                type="email"
+                                class="form-control"
+                                id="email"
+                              ></input>
+                            </div>
+                            <div className="input_box mt-3">
+                              <label htmlFor="email" className="input_label">
+                                Description
+                              </label>
+                              <textarea
+                                type="email"
+                                class="form-control"
+                                id="email"
+                              ></textarea>
+                            </div>
+                            <div className="input_box mt-3">
+                              <label htmlFor="email" className="input_label">
+                                URL
+                              </label>
+                              <input
+                                type="url"
+                                class="form-control"
+                                id="email"
+                              ></input>
+                            </div>{" "}
+                            <div className="input_box mt-3">
+                              <label htmlFor="email" className="input_label">
+                                Order ScreensShots
+                              </label>
+                              <div className="radio-holder d-flex">
+                                <div className="radio_box">
+                                  <input
+                                    type="radio"
+                                    name="order"
+                                    id="order1"
+                                  />
+                                  <label htmlFor="order1">1</label>
+                                </div>
+                                <div className="radio_box">
+                                  <input
+                                    type="radio"
+                                    name="order"
+                                    id="order2"
+                                  />
+                                  <label htmlFor="order2">2</label>
+                                </div>
+                                <div className="radio_box">
+                                  <input
+                                    type="radio"
+                                    name="order"
+                                    id="order3"
+                                  />
+                                  <label htmlFor="order3">3</label>
+                                </div>
+                                <div className="radio_box">
+                                  <input
+                                    type="radio"
+                                    name="order"
+                                    id="order4"
+                                  />
+                                  <label htmlFor="order4">4</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="col-6">
+                            <div className="input_box mt-3">
+                              <label htmlFor="email" className="input_label">
+                                Order Instructions for App
+                              </label>
+                              <textarea
+                                type="email"
+                                class="form-control"
+                                id="email"
+                              ></textarea>
+                            </div>
+                            <div className="input_box mt-3">
+                              <label htmlFor="email" className="input_label">
+                                Order Instructions for mweb
+                              </label>
+                              <textarea
+                                type="email"
+                                class="form-control"
+                                id="email"
+                              ></textarea>
+                            </div>
+                            <div className="input_box mt-3">
+                              <label htmlFor="email" className="input_label">
+                                Order Instructions for web
+                              </label>
+                              <textarea
+                                type="email"
+                                class="form-control"
+                                id="email"
+                              ></textarea>
+                            </div>
+                            <div className="input_box mt-3">
+                              <label htmlFor="email" className="input_label">
+                                Review Instructions
+                              </label>
+                              <textarea
+                                type="email"
+                                class="form-control"
+                                id="email"
+                              ></textarea>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="d-flex justify-content-end align-items-center">
+                          <button
+                            className="action_btn"
+                            onClick={() => setStep(2)}
+                          >
+                            Next
+                          </button>
+                        </div>
                       </div>
-                      <div className="input_box mt-3">
-                        <label htmlFor="email" className="input_label">
-                        Logo
-                        </label>
-                        <input
-                          type="email"
-                          class="form-control"
-                          id="email"
-                        
-                        ></input>
-                      </div>  
-                      <div className="input_box mt-3">
-                        <label htmlFor="email" className="input_label">
-                        Description
-                        </label>
-                        <textarea
-                          type="email"
-                          class="form-control"
-                          id="email"
-                        
-                        ></textarea>
-                      </div>
-                      <div className="input_box mt-3">
-                        <label htmlFor="email" className="input_label">
-                        URL
-                        </label>
-                        <input
-                          type="url"
-                          class="form-control"
-                          id="email"
-                        
-                        ></input>
-                      </div>   <div className="input_box mt-3">
-                        <label htmlFor="email" className="input_label">
-                        Order ScreensShots
-                        </label>
-                        <div className="radio-holder d-flex">
-                          <div className="radio_box">
-                            <input type="radio" name="order" id="order1"  />
-                            <label htmlFor="order1">1</label>
+                    </>
+                  ) : (
+                    <>
+                      {/* =========== SECOND STEP STARTS HERE ========== */}
+
+                      <div className="row">
+                        <div className="col-4">
+                          <div className="input_container">
+                            <h5 className="text-center" style={{
+                              color:'#000000',
+                              fontSize:'16px',
+                              fontWeight:'700'
+                            }}>Order</h5>
+                            <div className="input_box mt-3 tut_input">
+                              <label htmlFor="email" className="input_label">
+                                App ScreenShot
+                              </label>
+                              <div className="upload_box">
+                                <input type="file" name="file" id="file" />
+                                <label
+                                  htmlFor="file"
+                                  className=" d-flex align-items-center justify-content-start p-2 "
+                                  style={{ height: "50px" }}
+                                >
+                                  <img
+                                    src={upload_image}
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  <span>Upload Image </span>
+                                </label>
+                              </div>
+                            </div>
+                            <div className="input_box mt-3 tut_input">
+                              <label htmlFor="email" className="input_label">
+                              mWeb ScreenShot
+                              </label>
+                              <div className="upload_box">
+                                <input type="file" name="file" id="file" />
+                                <label
+                                  htmlFor="file"
+                                  className=" d-flex align-items-center justify-content-start p-2 "
+                                  style={{ height: "50px" }}
+                                >
+                                  <img
+                                    src={upload_image}
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  <span>Upload Image </span>
+                                </label>
+                              </div>
+                            </div>
+                            <div className="input_box mt-3 tut_input">
+                              <label htmlFor="email" className="input_label">
+                              Desktop Web ScreenShot
+                              </label>
+                              <div className="upload_box">
+                                <input type="file" name="file" id="file" />
+                                <label
+                                  htmlFor="file"
+                                  className=" d-flex align-items-center justify-content-start p-2 "
+                                  style={{ height: "50px" }}
+                                >
+                                  <img
+                                    src={upload_image}
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  <span>Upload Image </span>
+                                </label>
+                              </div>
+                            </div>
+                            <div className="input_box mt-3 tut_input">
+                              <label htmlFor="email" className="input_label">
+                              Video Tutorial
+                              </label>
+                              <div className="upload_box">
+                                <input type="file" name="file" id="file" />
+                                <label
+                                  htmlFor="file"
+                                  className=" d-flex align-items-center justify-content-start p-2 "
+                                  style={{ height: "50px" }}
+                                >
+                                  <img
+                                    src={upload_image}
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  <span>Upload Image </span>
+                                </label>
+                              </div>
+                            </div>
                           </div>
-                          <div className="radio_box">
-                            <input type="radio" name="order" id="order2" />
-                            <label htmlFor="order2">2</label>
+                        </div>
+                        <div className="col-4">
+                          <div className="input_container">
+                            <h5 className="text-center" style={{
+                              color:'#000000',
+                              fontSize:'16px',
+                              fontWeight:'700'
+                            }}>Delivery</h5>
+                            <div className="input_box mt-3 tut_input">
+                              <label htmlFor="email" className="input_label">
+                                App ScreenShot
+                              </label>
+                              <div className="upload_box">
+                                <input type="file" name="file" id="file" />
+                                <label
+                                  htmlFor="file"
+                                  className=" d-flex align-items-center justify-content-start p-2 "
+                                  style={{ height: "50px" }}
+                                >
+                                  <img
+                                    src={upload_image}
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  <span>Upload Image </span>
+                                </label>
+                              </div>
+                            </div>
+                            <div className="input_box mt-3 tut_input">
+                              <label htmlFor="email" className="input_label">
+                              mWeb ScreenShot
+                              </label>
+                              <div className="upload_box">
+                                <input type="file" name="file" id="file" />
+                                <label
+                                  htmlFor="file"
+                                  className=" d-flex align-items-center justify-content-start p-2 "
+                                  style={{ height: "50px" }}
+                                >
+                                  <img
+                                    src={upload_image}
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  <span>Upload Image </span>
+                                </label>
+                              </div>
+                            </div>
+                            <div className="input_box mt-3 tut_input">
+                              <label htmlFor="email" className="input_label">
+                              Desktop Web ScreenShot
+                              </label>
+                              <div className="upload_box">
+                                <input type="file" name="file" id="file" />
+                                <label
+                                  htmlFor="file"
+                                  className=" d-flex align-items-center justify-content-start p-2 "
+                                  style={{ height: "50px" }}
+                                >
+                                  <img
+                                    src={upload_image}
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  <span>Upload Image </span>
+                                </label>
+                              </div>
+                            </div>
+                            <div className="input_box mt-3 tut_input">
+                              <label htmlFor="email" className="input_label">
+                              Video Tutorial
+                              </label>
+                              <div className="upload_box">
+                                <input type="file" name="file" id="file" />
+                                <label
+                                  htmlFor="file"
+                                  className=" d-flex align-items-center justify-content-start p-2 "
+                                  style={{ height: "50px" }}
+                                >
+                                  <img
+                                    src={upload_image}
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  <span>Upload Image </span>
+                                </label>
+                              </div>
+                            </div>
                           </div>
-                          <div className="radio_box">
-                            <input type="radio" name="order" id="order3" />
-                            <label htmlFor="order3">3</label>
+                        </div>
+                        <div className="col-4">
+                          <div className="input_container">
+                            <h5 className="text-center" style={{
+                              color:'#000000',
+                              fontSize:'16px',
+                              fontWeight:'700'
+                            }}>Review</h5>
+                            <div className="input_box mt-3 tut_input">
+                              <label htmlFor="email" className="input_label">
+                                App ScreenShot
+                              </label>
+                              <div className="upload_box">
+                                <input type="file" name="file" id="file" />
+                                <label
+                                  htmlFor="file"
+                                  className=" d-flex align-items-center justify-content-start p-2 "
+                                  style={{ height: "50px" }}
+                                >
+                                  <img
+                                    src={upload_image}
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  <span>Upload Image </span>
+                                </label>
+                              </div>
+                            </div>
+                            <div className="input_box mt-3 tut_input">
+                              <label htmlFor="email" className="input_label">
+                              mWeb ScreenShot
+                              </label>
+                              <div className="upload_box">
+                                <input type="file" name="file" id="file" />
+                                <label
+                                  htmlFor="file"
+                                  className=" d-flex align-items-center justify-content-start p-2 "
+                                  style={{ height: "50px" }}
+                                >
+                                  <img
+                                    src={upload_image}
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  <span>Upload Image </span>
+                                </label>
+                              </div>
+                            </div>
+                            <div className="input_box mt-3 tut_input">
+                              <label htmlFor="email" className="input_label">
+                              Desktop Web ScreenShot
+                              </label>
+                              <div className="upload_box">
+                                <input type="file" name="file" id="file" />
+                                <label
+                                  htmlFor="file"
+                                  className=" d-flex align-items-center justify-content-start p-2 "
+                                  style={{ height: "50px" }}
+                                >
+                                  <img
+                                    src={upload_image}
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  <span>Upload Image </span>
+                                </label>
+                              </div>
+                            </div>
+                            <div className="input_box mt-3 tut_input">
+                              <label htmlFor="email" className="input_label">
+                              Video Tutorial
+                              </label>
+                              <div className="upload_box">
+                                <input type="file" name="file" id="file" />
+                                <label
+                                  htmlFor="file"
+                                  className=" d-flex align-items-center justify-content-start p-2 "
+                                  style={{ height: "50px" }}
+                                >
+                                  <img
+                                    src={upload_image}
+                                    alt=""
+                                    className="me-2"
+                                  />
+                                  <span>Upload Image </span>
+                                </label>
+                              </div>
+                            </div>
                           </div>
-                          <div className="radio_box">
-                            <input type="radio" name="order" id="order4" />
-                            <label htmlFor="order4">4</label>
-                          </div>
+                        </div>
+                        <div className="col-12 d-flex align-items-center justify-content-end mt-3">
+                        <button className="action_btn me-3">Previous</button>
+                          <button className="action_btn">Submit</button>
                         </div>
                       </div>
 
-                      </div>
-                      <div className="col-6">
-                      <div className="input_box mt-3">
-                        <label htmlFor="email" className="input_label">
-                        App Instructions
-                        </label>
-                        <textarea
-                          type="email"
-                          class="form-control"
-                          id="email"
-                        
-                        ></textarea>
-                      </div>
-                      <div className="input_box mt-3">
-                        <label htmlFor="email" className="input_label">
-                        Mobile Web Instructions
-                        </label>
-                        <textarea
-                          type="email"
-                          class="form-control"
-                          id="email"
-                        
-                        ></textarea>
-                      </div>
-                      <div className="input_box mt-3">
-                        <label htmlFor="email" className="input_label">
-                        Desktop Web Instructions
-                        </label>
-                        <textarea
-                          type="email"
-                          class="form-control"
-                          id="email"
-                        
-                        ></textarea>
-                      </div>
-                      </div>
-                    </div>
-                    <div className="d-flex justify-content-end align-items-center">
-                    <button className="action_btn">Next</button>
-                    </div>
-                    
-                  </div>
-                </> : <></>}</div>
+                      {/* =========== SECOND STEP ENDS HERE ========== */}
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </div>

@@ -1,0 +1,14 @@
+.input_container{
+    border: 1px solid #0000001A;
+    padding: 16px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+}
+.tut_input label{
+    color: #000000 !important;
+    font-size: 14px !important;
+    font-weight: normal !important;
+}

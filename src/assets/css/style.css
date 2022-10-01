@@ -275,16 +275,15 @@ align-items: center;
     align-items: center;
 }
 .radio_box label::before{
-    
     content: url();
     height: 20px;
     width: 20px;
     border-radius: 50%;
     background-color: transparent;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
-    -o-border-radius: 50%;
+    -webkit-border-radius:;
+    -moz-border-radius:;
+    -ms-border-radius:;
+    -o-border-radius:;
     border: 1px solid gray;
     margin-right: 8px;
 }
@@ -302,6 +301,10 @@ align-items: center;
     border-radius: 8px !important;
     border: 1px solid #CED4DA;
     padding: 20px 0;
+    -webkit-border-radius:;
+    -moz-border-radius:;
+    -ms-border-radius:;
+    -o-border-radius:;
 }
 .upload_box span{
     color: #000000;
