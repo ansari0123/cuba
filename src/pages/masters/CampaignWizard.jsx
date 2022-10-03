@@ -235,7 +235,7 @@ const CampaignWizard = () => {
                 {/* ===================================== CAMPAIGN SETUP ENDS============================== */}
 
                 {/* ===================================== PRODUCT SETUP STARTS============================== */}
-                <table class="table mt-3">
+                {/* <table class="table mt-3">
                   <thead className="table_head">
                     <tr>
                       <th scope="col">#</th>
@@ -254,7 +254,7 @@ const CampaignWizard = () => {
                       position: "relative",
                     }}
                   >
-                    {false ? ( //loader
+                    {false ? (
                       <>
                         <div
                           className="spinner-3 mt-5 text-center"
@@ -267,10 +267,10 @@ const CampaignWizard = () => {
                     ) : (
                       <></>
                     )}
-                    {false ? ( //message
+                    {false ? (
                       <>
                         <h3 className="mt-5 d-flex-justify-content-center align-items-center">
-                          {/* {message} */}
+                          NO DATA FOUND
                         </h3>
                       </>
                     ) : (
@@ -290,9 +290,9 @@ const CampaignWizard = () => {
                 </table>
                 <button className="action_btn" onClick={handleShow}>
                   Add Product
-                </button>
+                </button> */}
                 {/* =====================================  ADD PRODUCT MODAL STARTS============================== */}
-                <Modal
+                {/* <Modal
                   show={show}
                   onHide={handleClose}
                   centered
@@ -536,8 +536,48 @@ const CampaignWizard = () => {
                       Add & Close
                     </Button>
                   </Modal.Footer>
-                </Modal>
+                </Modal> */}
                 {/* =====================================  ADD PRODUCT MODAL ENDS  ============================== */}
+                {/* ===================================== PRODUCT SETUP ENDS============================== */}
+
+                {/* ===================================== PER DAY SETUP STARTS============================== */}
+                <div className="row mt-2">
+                  <div className="col-4">
+                    <div className="hr_label">Setup Options</div>
+                  </div>
+                  <div className="col-8">
+                    <div className="radio-holder d-flex ">
+                      <div className="radio_box">
+                        <input type="radio" name="sOption" id="same" />
+                        <label htmlFor="same">Same all days</label>
+                      </div>
+                      <div className="radio_box">
+                        <input type="radio" name="sOption" id="gradual" />
+                        <label htmlFor="gradual">Gradual growth</label>
+                      </div>
+                      <div className="radio_box">
+                        <input type="radio" name="sOption" id="custom" />
+                        <label htmlFor="custom">Fully Custom</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {/* ===================================== SAME ALL DAY STARTS============================== */}
+                <div className="row">
+                  <div className="row mt-2">
+                    <div className="col-2 d-flex align-items-center">
+                      <div className="hr_label">Task Hours</div>
+                    </div>
+                    <div className="col-5">
+                      <input type="number" className="hr_input w-100" />
+                    </div>
+                    <div className="col-5">
+                      <button className="action_btn">Plan</button>
+                    </div>
+                  </div>
+                </div>
+                {/* =====================================  SAME ALL DAY ENDS============================== */}
+                {/* ===================================== PER DAY SETUP ENDS============================== */}
               </div>
 
               <div className="form_footer d-flex justify-content-end align-items-center">
