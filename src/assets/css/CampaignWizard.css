@@ -1,0 +1,13 @@
+.horizantal_input select{
+    height: 40px;
+}
+.form_footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+}
+.add_product_modal{
+    max-width: 89% !important;
+}
