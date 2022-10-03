@@ -572,7 +572,7 @@ const CampaignWizard = () => {
                       <input type="number" className="hr_input w-100" />
                     </div>
                     <div className="col-5">
-                      <button className="action_btn">Plan</button>
+                      <button className="action_btn">Plan </button>
                     </div>
                   </div>
                 </div>
