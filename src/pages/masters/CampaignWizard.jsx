@@ -11,6 +11,10 @@ const CampaignWizard = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // to add product form data
+  const [productData, setProductData] = useState({});
+  console.log(productData);
+
   return (
     <>
       <div className="main_container">
@@ -311,17 +315,17 @@ const CampaignWizard = () => {
                             </div>
                           </div>
                           <div className="col-8">
-                            <input type="text" className="hr_input w-100" />
+                            <input  name='Product name' onChange={(e)=>setProductData({...productData,[e.target.name]:e.target.value})} type="text" className="hr_input w-100" />
                           </div>
                         </div>
                         <div className="row mt-2">
-                          <div className="col-4">
-                            <div className="hr_label">
-                              Start Date<sup>*</sup>
+                        <div className="hr_label">
+                        Start Date<sup>*</sup>
+                        <div className="col-4">
                             </div>
                           </div>
                           <div className="col-8">
-                            <input type="date" className="hr_input w-100" />
+                            <input name=' Start Date' onChange={(e)=>setProductData({...productData,[e.target.name]:e.target.value})} type="date" className="hr_input w-100" />
                           </div>
                         </div>
                         <div className="row mt-2">
@@ -331,7 +335,7 @@ const CampaignWizard = () => {
                             </div>
                           </div>
                           <div className="col-8">
-                            <input type="date" className="hr_input w-100" />
+                            <input name=' End Date' onChange={(e)=>setProductData({...productData,[e.target.name]:e.target.value})} type="date" className="hr_input w-100" />
                           </div>
                         </div>
                         <div className="row mt-2">
@@ -339,7 +343,7 @@ const CampaignWizard = () => {
                             <div className="hr_label">Task Hours</div>
                           </div>
                           <div className="col-8">
-                            <input type="number" className="hr_input w-100" />
+                            <input name='Task Hours' onChange={(e)=>setProductData({...productData,[e.target.name]:e.target.value})}type="number" className="hr_input w-100" />
                           </div>
                         </div>
                         <div className="row mt-2">
@@ -349,7 +353,7 @@ const CampaignWizard = () => {
                             </div>
                           </div>
                           <div className="col-8">
-                            <input type="url" className="hr_input w-100" />
+                            <input name='Product URL' onChange={(e)=>setProductData({...productData,[e.target.name]:e.target.value})} type="url" className="hr_input w-100" />
                           </div>
                         </div>
                         <div className="row mt-2">
@@ -359,7 +363,7 @@ const CampaignWizard = () => {
                             </div>
                           </div>
                           <div className="col-8">
-                            <input type="text" className="hr_input w-100" />
+                            <input name='Earning Tag' onChange={(e)=>setProductData({...productData,[e.target.name]:e.target.value})} type="text" className="hr_input w-100" />
                           </div>
                         </div>
                         <div className="row mt-2">
@@ -410,7 +414,7 @@ const CampaignWizard = () => {
                             </div>
                           </div>
                           <div className="col-8">
-                            <input type="text" className="hr_input w-100" />
+                            <input name='Question 1' onChange={(e)=>setProductData({...productData,[e.target.name]:e.target.value})} type="text" className="hr_input w-100" />
                           </div>
                         </div>
                         <div className="row mt-2">
@@ -420,7 +424,7 @@ const CampaignWizard = () => {
                             </div>
                           </div>
                           <div className="col-8">
-                            <input type="text" className="hr_input w-100" />
+                            <input name='Question 2' onChange={(e)=>setProductData({...productData,[e.target.name]:e.target.value})} type="text" className="hr_input w-100" />
                           </div>
                         </div>
                       </div>
@@ -432,7 +436,7 @@ const CampaignWizard = () => {
                             </div>
                           </div>
                           <div className="col-8">
-                            <input type="text" className="hr_input w-100" />
+                            <input name='Product Description' onChange={(e)=>setProductData({...productData,[e.target.name]:e.target.value})} type="text" className="hr_input w-100" />
                           </div>
                         </div>
                         <div className="row mt-2">
@@ -444,7 +448,7 @@ const CampaignWizard = () => {
                           </div>
                           <div className="col-8">
                             <textarea
-                              name=""
+                            name='Task Terms' onChange={(e)=>setProductData({...productData,[e.target.name]:e.target.value})}
                               id=""
                               cols="30"
                               rows="3"
@@ -457,7 +461,7 @@ const CampaignWizard = () => {
                             <div className="hr_label">Completion Rate</div>
                           </div>
                           <div className="col-8">
-                            <input type="number" className="hr_input w-100" />
+                            <input name='Completion Rate' onChange={(e)=>setProductData({...productData,[e.target.name]:e.target.value})} type="number" className="hr_input w-100" />
                           </div>
                         </div>
                         <div className="row mt-2">
@@ -465,7 +469,7 @@ const CampaignWizard = () => {
                             <div className="hr_label">Reward Rate</div>
                           </div>
                           <div className="col-8">
-                            <input type="number" className="hr_input w-100" />
+                            <input name='Reward Rate' onChange={(e)=>setProductData({...productData,[e.target.name]:e.target.value})} type="number" className="hr_input w-100" />
                           </div>
                         </div>
                         <div className="row mt-2">
@@ -473,7 +477,7 @@ const CampaignWizard = () => {
                             <div className="hr_label">Reward</div>
                           </div>
                           <div className="col-8">
-                            <input type="number" className="hr_input w-100" />
+                            <input name='Reward' onChange={(e)=>setProductData({...productData,[e.target.name]:e.target.value})} type="number" className="hr_input w-100" />
                           </div>
                         </div>
                         <div className="row mt-2">
@@ -506,7 +510,7 @@ const CampaignWizard = () => {
                             <div className="hr_label">Review Rate</div>
                           </div>
                           <div className="col-8">
-                            <input type="number" className="hr_input w-100" />
+                            <input name='Review Rate' onChange={(e)=>setProductData({...productData,[e.target.name]:e.target.value})} type="number" className="hr_input w-100" />
                           </div>
                         </div>
                         <div className="row mt-2">
@@ -514,7 +518,7 @@ const CampaignWizard = () => {
                             <div className="hr_label">Review Reward</div>
                           </div>
                           <div className="col-8">
-                            <input type="number" className="hr_input w-100" />
+                            <input name='Review Reward' onChange={(e)=>setProductData({...productData,[e.target.name]:e.target.value})} type="number" className="hr_input w-100" />
                           </div>
                         </div>
                         <div className="row mt-2">
@@ -522,7 +526,7 @@ const CampaignWizard = () => {
                             <div className="hr_label">Review After Days</div>
                           </div>
                           <div className="col-8">
-                            <input type="number" className="hr_input w-100" />
+                            <input name='Review After Days' onChange={(e)=>setProductData({...productData,[e.target.name]:e.target.value})} type="number" className="hr_input w-100" />
                           </div>
                         </div>
                       </div>
