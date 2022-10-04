@@ -97,7 +97,7 @@ const CampaignWizard = () => {
                             <option value="0">Traffic</option>
                           </select>
                         </div>
-
+                        {}
                         <div className="row mt-2">
                           <div className="col-4">
                             <div className="hr_label">
