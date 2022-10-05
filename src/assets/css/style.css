@@ -10,12 +10,14 @@
     font-weight: 700;
     margin-bottom: 10px;
 }
-.input_box input, .pass_input_box input, .input_box select, .input_box textarea, .hr_input{
+.input_box input, .pass_input_box input, .input_box select, .input_box textarea, .hr_input,.form-select{
     background-color: #F3F3FF !important;
     border-radius: 8px !important;
     border: 1px solid #CED4DA;
-    padding: 10px 20px;
+    padding: 8px 20px !important;
+    height: 40px;
 }
+
 .pass_input_wrapper{
     position: relative;
 }

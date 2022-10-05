@@ -3,6 +3,7 @@ import react, { useState, useEffect } from "react";
 import add_plus from "../../assets/images/add_plus.svg";
 import swal from "sweetalert";
 import upload_image from "../../assets/images/upload_image.svg";
+import ReactPaginate from "react-paginate";
 
 const Platforms = () => {
   const [addData, setAddData] = useState({
@@ -31,7 +32,7 @@ const Platforms = () => {
   const [step, setStep] = useState(1);
 
   const fetchAllCodes = async () => {
-    const resp = await axios.get("/invite_codes", {
+    const resp = await axios.get("/platforms", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -39,9 +40,12 @@ const Platforms = () => {
     console.log(resp.data?.data);
 
     if (resp.data) {
-      // setCodes(resp?.data?.data);
+      setCodes(resp?.data?.data);
       setLoading(false);
       setMessage("");
+      setPageCount(Math.ceil(resp.data?.data.length / 5));
+      console.log("pageCount", pageCount);
+      updatePageItems(1);
     } else {
       setLoading(false);
       setMessage("No Code Found");
@@ -71,6 +75,27 @@ const Platforms = () => {
       }
     }
   };
+  // ======================================= pagination starts ======================
+  const [pageCount, setPageCount] = useState(0);
+  const [pageItems, setPageItems] = useState([]);
+
+  const updatePageItems = (pageNo) => {
+    const end = pageNo * 4;
+    const start = end - 4;
+    const items = codes.slice(start, end);
+    setPageItems(items);
+    console.log(pageItems);
+  };
+  useEffect(() => {
+    const items = codes.slice(0, 4);
+    setPageItems(items);
+    console.log(pageItems);
+  }, [codes]);
+  // handle page change
+  const handlePageChange = (data) => {
+    updatePageItems(data.selected + 1);
+  };
+  // ======================================= PAGINATION ENDS ========================
   return (
     <>
       <div className="content">
@@ -247,11 +272,16 @@ const Platforms = () => {
                       <div className="row">
                         <div className="col-4">
                           <div className="input_container">
-                            <h5 className="text-center" style={{
-                              color:'#000000',
-                              fontSize:'16px',
-                              fontWeight:'700'
-                            }}>Order</h5>
+                            <h5
+                              className="text-center"
+                              style={{
+                                color: "#000000",
+                                fontSize: "16px",
+                                fontWeight: "700",
+                              }}
+                            >
+                              Order
+                            </h5>
                             <div className="input_box mt-3 tut_input">
                               <label htmlFor="email" className="input_label">
                                 App ScreenShot
@@ -274,7 +304,7 @@ const Platforms = () => {
                             </div>
                             <div className="input_box mt-3 tut_input">
                               <label htmlFor="email" className="input_label">
-                              mWeb ScreenShot
+                                mWeb ScreenShot
                               </label>
                               <div className="upload_box">
                                 <input type="file" name="file" id="file" />
@@ -294,7 +324,7 @@ const Platforms = () => {
                             </div>
                             <div className="input_box mt-3 tut_input">
                               <label htmlFor="email" className="input_label">
-                              Desktop Web ScreenShot
+                                Desktop Web ScreenShot
                               </label>
                               <div className="upload_box">
                                 <input type="file" name="file" id="file" />
@@ -314,7 +344,7 @@ const Platforms = () => {
                             </div>
                             <div className="input_box mt-3 tut_input">
                               <label htmlFor="email" className="input_label">
-                              Video Tutorial
+                                Video Tutorial
                               </label>
                               <div className="upload_box">
                                 <input type="file" name="file" id="file" />
@@ -336,11 +366,16 @@ const Platforms = () => {
                         </div>
                         <div className="col-4">
                           <div className="input_container">
-                            <h5 className="text-center" style={{
-                              color:'#000000',
-                              fontSize:'16px',
-                              fontWeight:'700'
-                            }}>Delivery</h5>
+                            <h5
+                              className="text-center"
+                              style={{
+                                color: "#000000",
+                                fontSize: "16px",
+                                fontWeight: "700",
+                              }}
+                            >
+                              Delivery
+                            </h5>
                             <div className="input_box mt-3 tut_input">
                               <label htmlFor="email" className="input_label">
                                 App ScreenShot
@@ -363,7 +398,7 @@ const Platforms = () => {
                             </div>
                             <div className="input_box mt-3 tut_input">
                               <label htmlFor="email" className="input_label">
-                              mWeb ScreenShot
+                                mWeb ScreenShot
                               </label>
                               <div className="upload_box">
                                 <input type="file" name="file" id="file" />
@@ -383,7 +418,7 @@ const Platforms = () => {
                             </div>
                             <div className="input_box mt-3 tut_input">
                               <label htmlFor="email" className="input_label">
-                              Desktop Web ScreenShot
+                                Desktop Web ScreenShot
                               </label>
                               <div className="upload_box">
                                 <input type="file" name="file" id="file" />
@@ -403,7 +438,7 @@ const Platforms = () => {
                             </div>
                             <div className="input_box mt-3 tut_input">
                               <label htmlFor="email" className="input_label">
-                              Video Tutorial
+                                Video Tutorial
                               </label>
                               <div className="upload_box">
                                 <input type="file" name="file" id="file" />
@@ -425,11 +460,16 @@ const Platforms = () => {
                         </div>
                         <div className="col-4">
                           <div className="input_container">
-                            <h5 className="text-center" style={{
-                              color:'#000000',
-                              fontSize:'16px',
-                              fontWeight:'700'
-                            }}>Review</h5>
+                            <h5
+                              className="text-center"
+                              style={{
+                                color: "#000000",
+                                fontSize: "16px",
+                                fontWeight: "700",
+                              }}
+                            >
+                              Review
+                            </h5>
                             <div className="input_box mt-3 tut_input">
                               <label htmlFor="email" className="input_label">
                                 App ScreenShot
@@ -452,7 +492,7 @@ const Platforms = () => {
                             </div>
                             <div className="input_box mt-3 tut_input">
                               <label htmlFor="email" className="input_label">
-                              mWeb ScreenShot
+                                mWeb ScreenShot
                               </label>
                               <div className="upload_box">
                                 <input type="file" name="file" id="file" />
@@ -472,7 +512,7 @@ const Platforms = () => {
                             </div>
                             <div className="input_box mt-3 tut_input">
                               <label htmlFor="email" className="input_label">
-                              Desktop Web ScreenShot
+                                Desktop Web ScreenShot
                               </label>
                               <div className="upload_box">
                                 <input type="file" name="file" id="file" />
@@ -492,7 +532,7 @@ const Platforms = () => {
                             </div>
                             <div className="input_box mt-3 tut_input">
                               <label htmlFor="email" className="input_label">
-                              Video Tutorial
+                                Video Tutorial
                               </label>
                               <div className="upload_box">
                                 <input type="file" name="file" id="file" />
@@ -513,7 +553,7 @@ const Platforms = () => {
                           </div>
                         </div>
                         <div className="col-12 d-flex align-items-center justify-content-end mt-3">
-                        <button className="action_btn me-3">Previous</button>
+                          <button className="action_btn me-3">Previous</button>
                           <button className="action_btn">Submit</button>
                         </div>
                       </div>
@@ -566,13 +606,24 @@ const Platforms = () => {
             ) : (
               <></>
             )}
-            {codes?.map((code, index) => {
+            {pageItems?.map((code, index) => {
               return (
                 <>
                   <tr>
                     <th scope="row">{index + 1}</th>
                     <td>{code.name}</td>
-                    <td>{code.logo}</td>
+                    <td>
+                      {" "}
+                      <img
+                        style={{
+                          width: "80px",
+                          height: "50px",
+                          objectFit: "contain",
+                        }}
+                        src={code.logo}
+                        alt=""
+                      />
+                    </td>
                     <td>{code.URL}</td>
                     <td>{code.Description}</td>
                     <td>
@@ -593,6 +644,23 @@ const Platforms = () => {
             })}
           </tbody>
         </table>
+        <ReactPaginate
+          pageCount={pageCount}
+          onPageChange={handlePageChange}
+          previousLabel={"<"}
+          nextLabel={">"}
+          pageRangeDisplayed={5}
+          containerClassName={"pagination justify-content-end"}
+          pageClassName={"page-item"}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          activeClassName={"active"}
+        />
       </div>
     </>
   );

@@ -1,8 +1,10 @@
 import axios from "../../axios/axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import add_plus from "../../assets/images/add_plus.svg";
 import upload_image from "../../assets/images/upload_image.svg";
 import swal from "sweetalert";
+import { useDownloadExcel } from "react-export-table-to-excel";
+import ReactPaginate from "react-paginate";
 const Retailers = () => {
   const [addData, setAddData] = useState({
     name: "",
@@ -20,6 +22,13 @@ const Retailers = () => {
   const [keywordSearch, setKeywordsSearch] = useState("");
   // const [getItem,setGetItem]=useState([])
 
+  // exporting table
+  const table_ref = useRef();
+  const { onDownload } = useDownloadExcel({
+    currentTableRef: table_ref.current,
+    filename: "retailers_list",
+    sheet: "retailers",
+  });
   const handleUpdate = async () => {
     setUpdateLoader(true);
     debugger;
@@ -37,7 +46,7 @@ const Retailers = () => {
       .post("retailer/update", formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
-          'Content-Type': 'application/x-www-form-urlencoded'
+          "Content-Type": "application/x-www-form-urlencoded",
         },
       })
       .then((result) => {
@@ -94,6 +103,9 @@ const Retailers = () => {
       setRetailers(resp?.data?.data);
       setLoading(false);
       setMessage("");
+      setPageCount(Math.ceil(resp.data?.data.length / 5));
+      console.log("pageCount", pageCount);
+      updatePageItems(1);
     } else {
       setLoading(false);
       setMessage("No Code Found");
@@ -115,6 +127,27 @@ const Retailers = () => {
   //   })
 
   // },[keywordSearch,])
+  // ======================================= pagination starts ======================
+  const [pageCount, setPageCount] = useState(0);
+  const [pageItems, setPageItems] = useState([]);
+
+  const updatePageItems = (pageNo) => {
+    const end = pageNo * 3;
+    const start = end - 3;
+    const items = retailers.slice(start, end);
+    setPageItems(items);
+    console.log(pageItems);
+  };
+  useEffect(() => {
+    const items = retailers.slice(0, 3);
+    setPageItems(items);
+    console.log(pageItems);
+  }, [retailers]);
+  // handle page change
+  const handlePageChange = (data) => {
+    updatePageItems(data.selected + 1);
+  };
+  // ======================================= PAGINATION ENDS ========================
   return (
     <>
       <div className="content">
@@ -272,7 +305,9 @@ const Retailers = () => {
             onChange={(e) => setKeywordsSearch(e.target.value)}
           />
           <div className="options d-flex align-items-center">
-            <button className="export_btn me-5">Export</button>
+            <button className="export_btn me-5" onClick={onDownload}>
+              Export
+            </button>
             <select className="option_select">
               <option value="10">10</option>
               <option value="20">20</option>
@@ -283,7 +318,7 @@ const Retailers = () => {
         {/* =========== OPTION BAR ENDS =================== */}
 
         {/* =========== TABLE STARTS ====================== */}
-        <table class="table mt-3">
+        <table class="table mt-3" ref={table_ref}>
           <thead className="table_head">
             <tr>
               <th scope="col">#</th>
@@ -322,19 +357,33 @@ const Retailers = () => {
             ) : (
               <></>
             )}
-            {retailers?.filter((item) => {
-                  if(keywordSearch == ''){
-                    return item;
-                  }else if(item.name.toUpperCase().includes(keywordSearch.toUpperCase())){
-                    return item;
-                  }
-              }).map((retailer, index) => {
+            {pageItems
+              ?.filter((item) => {
+                if (keywordSearch == "") {
+                  return item;
+                } else if (
+                  item.name.toUpperCase().includes(keywordSearch.toUpperCase())
+                ) {
+                  return item;
+                }
+              })
+              .map((retailer, index) => {
                 return (
                   <>
                     <tr>
                       <th scope="row">{index + 1}</th>
                       <td>{retailer.name}</td>
-                      <td>{"logo"}</td>
+                      <td>
+                        <img
+                          style={{
+                            width: "80px",
+                            height: "50px",
+                            objectFit: "contain",
+                          }}
+                          src={retailer.logo}
+                          alt=""
+                        />
+                      </td>
                       <td>{retailer.subdomain}</td>
                       <td>{retailer.category}</td>
                       <td>
@@ -500,6 +549,23 @@ const Retailers = () => {
               })}
           </tbody>
         </table>
+        <ReactPaginate
+          pageCount={pageCount}
+          onPageChange={handlePageChange}
+          previousLabel={"<"}
+          nextLabel={">"}
+          pageRangeDisplayed={5}
+          containerClassName={"pagination justify-content-end"}
+          pageClassName={"page-item"}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          activeClassName={"active"}
+        />
         {/* =========== TABLE ENDS ========================= */}
       </div>
     </>

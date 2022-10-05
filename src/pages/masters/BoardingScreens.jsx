@@ -10,13 +10,15 @@ import { Form, Formik } from "formik";
 
 const BoardingScreens = () => {
   // state for screens, add screens and update screen
-  const [newScreen, setNewScreen] = useState({});
+  const [newScreen, setNewScreen] = useState({
+    image: "",
+  });
   const [updateScreen, setUpdateScreen] = useState({});
   const [screens, setScreens] = useState([]);
   // loader
   const [loader, setLoader] = useState(false);
 
-  console.log(updateScreen);
+  // console.log(updateScreen);
   console.log(newScreen);
   // assigning properties to new screens and update screen
   // const handleInput = (e, type,name) => {
@@ -47,9 +49,9 @@ const BoardingScreens = () => {
   // };
 
   // handling add screen
-  const handleAdd = async (values) => {
+  const handleAdd = async () => {
     // e.preventDefault();
-    console.log(values);
+
     setLoader(true);
     const formData = new FormData();
 
@@ -65,10 +67,51 @@ const BoardingScreens = () => {
         })
         .then((resp) => {
           console.log(resp);
+
           setLoader(false);
-          // fetchAllScreen();
+          fetchAllScreens();
           setNewScreen({});
-          swal("Screen Added Successfully", "", "success");
+          swal(resp.message, "", "success");
+        })
+        .catch((err) => {
+          setLoader(false);
+          // swal(err.message, "", "error");
+        });
+    }
+  };
+
+  const handleUpdate = async () => {
+    // e.preventDefault();
+
+    setLoader(true);
+    const formData = new FormData();
+
+    for (let property in updateScreen) {
+      // formData.append(property, newScreen[property]);
+      if (property == "id") {
+        formData.append("screen_id", updateScreen[property]);
+      } else if (
+        property == "image-url" &&
+        typeof updateScreen[property] != "string"
+      ) {
+        formData.append("image", updateScreen[property]);
+      } else {
+        formData.append(property, updateScreen[property]);
+      }
+    }
+    if (formData) {
+      const resp = await axios
+        .post("/uspscreen/update", formData, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((resp) => {
+          console.log(resp);
+          setLoader(false);
+          fetchAllScreens();
+          setUpdateScreen({});
+          swal("Screen Updated Successfully", "", "success");
         })
         .catch((err) => {
           setLoader(false);
@@ -155,131 +198,273 @@ const BoardingScreens = () => {
                       ></button>
                     </div>
                     <div class="offcanvas-body ">
-                      <div className="row">
-                        <div className="col-12">
-                          <div className="input_box">
-                            <label htmlFor="email" className="input_label">
-                              Image URL
-                            </label>
-                            <input
-                              type={"text"}
-                              class="form-control"
-                              id="email"
-                            ></input>
-                          </div>
-                        </div>
-                        <div className="col-12">
-                          <div className="input_box mt-3">
-                            <label htmlFor="email" className="input_label">
-                              Heading
-                            </label>
-                            <input
-                              type={"text"}
-                              class="form-control"
-                              id="email"
-                            ></input>
-                          </div>
-                        </div>
-                        <div className="col-12"></div>
-                        <div className="input_box mt-3">
-                          <label htmlFor="email" className="input_label">
-                            Sub Head
-                          </label>
-                          <input
-                            type={"text"}
-                            class="form-control"
-                            id="email"
-                          ></input>
-                        </div>
-                        <div className="col-12"></div>
-                        <div className="input_box mt-3">
-                          <label htmlFor="email" className="input_label">
-                            Button Text
-                          </label>
-                          <input
-                            type={"text"}
-                            class="form-control"
-                            id="email"
-                          ></input>
-                        </div>
+                      <Formik>
+                        <Form>
+                          <div className="row">
+                            <div className="col-12">
+                              <div className="input_box mt-3">
+                                <label htmlFor="email" className="input_label">
+                                  Image URL
+                                </label>
+                                <div className="upload_box">
+                                  <input
+                                    type="file"
+                                    name="image"
+                                    id="file"
+                                    // onChange={(e)=>handleInput(e,ADD)}
+                                    onChange={(e) =>
+                                      setUpdateScreen({
+                                        ...updateScreen,
+                                        "image-url": e.target.files[0],
+                                      })
+                                    }
+                                  />
+                                  <label
+                                    htmlFor="file"
+                                    className=" d-flex flex-column align-items-center justify-content-center"
+                                  >
+                                    <img src={upload_image} alt="" />
+                                    <span>Upload Image </span>
+                                  </label>
+                                </div>
+                              </div>
+                              {updateScreen["image-url"] ? (
+                                <>
+                                  <div className=" image_preview mt-3">
+                                    <img
+                                      style={{
+                                        heigth: "180px",
+                                        object: "cover",
+                                      }}
+                                      src={
+                                        !(
+                                          typeof updateScreen["image-url"] ===
+                                          "string"
+                                        )
+                                          ? URL.createObjectURL(
+                                              updateScreen["image-url"]
+                                            )
+                                          : updateScreen["image-url"]
+                                      }
+                                      alt=""
+                                    />
+                                  </div>
+                                </>
+                              ) : (
+                                <></>
+                              )}
+                            </div>
+                            <div className="col-12">
+                              <div className="input_box mt-3">
+                                <label htmlFor="email" className="input_label">
+                                  Heading
+                                </label>
+                                <input
+                                  type={"text"}
+                                  class="form-control"
+                                  id="email"
+                                  name="head"
+                                  value={updateScreen.head}
+                                  // onChange={(e) => handleInput(e, ADD)}
+                                  onChange={(e) =>
+                                    setUpdateScreen({
+                                      ...updateScreen,
+                                      head: e.target.value,
+                                    })
+                                  }
+                                ></input>
+                              </div>
+                            </div>
+                            <div className="col-12"></div>
+                            <div className="input_box mt-3">
+                              <label htmlFor="email" className="input_label">
+                                Sub Head
+                              </label>
+                              <input
+                                type={"text"}
+                                class="form-control"
+                                id="email"
+                                name="subhead"
+                                value={updateScreen.subhead}
+                                // onChange={(e) => handleInput(e, ADD)}
+                                onChange={(e) =>
+                                  setUpdateScreen({
+                                    ...updateScreen,
+                                    subhead: e.target.value,
+                                  })
+                                }
+                              ></input>
+                            </div>
+                            <div className="col-12"></div>
+                            <div className="input_box mt-3">
+                              <label htmlFor="email" className="input_label">
+                                Button Text
+                              </label>
+                              <input
+                                type={"text"}
+                                class="form-control"
+                                id="email"
+                                name="button-text"
+                                // onChange={(e) => handleInput(e, ADD)}
+                                value={updateScreen["button-text"]}
+                                onChange={(e) =>
+                                  setUpdateScreen({
+                                    ...updateScreen,
+                                    "button-text": e.target.value,
+                                  })
+                                }
+                              ></input>
+                            </div>
 
-                        <div className="col-6">
-                          <div className="input_box mt-3">
-                            <label htmlFor="email" className="input_label">
-                              BG-Color Hex
-                            </label>
-                            <input
-                              type={"text"}
-                              class="form-control"
-                              id="email"
-                            ></input>
+                            <div className="col-6">
+                              <div className="input_box mt-3">
+                                <label htmlFor="email" className="input_label">
+                                  BG-Color Hex
+                                </label>
+                                <input
+                                  type={"text"}
+                                  class="form-control"
+                                  id="email"
+                                  name="bg-color"
+                                  // onChange={(e) => handleInput(e, ADD)}
+                                  value={updateScreen["bg-color"]}
+                                  onChange={(e) =>
+                                    setUpdateScreen({
+                                      ...updateScreen,
+                                      "bg-color": e.target.value,
+                                    })
+                                  }
+                                ></input>
+                              </div>
+                            </div>
+                            <div className="col-6">
+                              <div className="input_box mt-3">
+                                <label htmlFor="email" className="input_label">
+                                  Head-Color Hex
+                                </label>
+                                <input
+                                  type={"text"}
+                                  class="form-control"
+                                  id="email"
+                                  name="head-color"
+                                  // onChange={(e) => handleInput(e, ADD)}
+                                  value={updateScreen["head-color"]}
+                                  onChange={(e) =>
+                                    setUpdateScreen({
+                                      ...updateScreen,
+                                      "head-color": e.target.value,
+                                    })
+                                  }
+                                ></input>
+                              </div>
+                            </div>
+                            <div className="col-6">
+                              <div className="input_box mt-3">
+                                <label htmlFor="email" className="input_label">
+                                  SubHead-Color Hex
+                                </label>
+                                <input
+                                  type={"text"}
+                                  class="form-control"
+                                  id="email"
+                                  name="text-color"
+                                  // onChange={(e) => handleInput(e, ADD)}
+                                  value={updateScreen["text-color"]}
+                                  onChange={(e) =>
+                                    setUpdateScreen({
+                                      ...updateScreen,
+                                      "text-color": e.target.value,
+                                    })
+                                  }
+                                ></input>
+                              </div>
+                            </div>
+                            <div className="col-6">
+                              <div className="input_box mt-3">
+                                <label htmlFor="email" className="input_label">
+                                  Button-Color Hex
+                                </label>
+                                <input
+                                  type={"text"}
+                                  class="form-control"
+                                  id="email"
+                                  name="button-color"
+                                  // onChange={(e) => handleInput(e, ADD)}
+                                  value={updateScreen["button-color"]}
+                                  onChange={(e) =>
+                                    setUpdateScreen({
+                                      ...updateScreen,
+                                      "button-color": e.target.value,
+                                    })
+                                  }
+                                ></input>
+                              </div>
+                            </div>
+                            <div className="col-6">
+                              <div className="input_box mt-3">
+                                <label htmlFor="email" className="input_label">
+                                  Btn-text-Color Hex
+                                </label>
+                                <input
+                                  type={"text"}
+                                  class="form-control"
+                                  id="email"
+                                  name="button-text-color"
+                                  // onChange={(e) => handleInput(e, ADD)}
+                                  value={updateScreen["button-text-color"]}
+                                  onChange={(e) =>
+                                    setUpdateScreen({
+                                      ...updateScreen,
+                                      "button-text-color": e.target.value,
+                                    })
+                                  }
+                                ></input>
+                              </div>
+                            </div>
+                            <div className="col-6">
+                              <div className="input_box mt-3">
+                                <label htmlFor="email" className="input_label">
+                                  Screen Index
+                                </label>
+                                <input
+                                  type={"text"}
+                                  class="form-control"
+                                  id="email"
+                                  name="screen-index"
+                                  // onChange={(e) => handleInput(e, ADD)}
+                                  value={updateScreen["screen-index"]}
+                                  onChange={(e) =>
+                                    setUpdateScreen({
+                                      ...updateScreen,
+                                      "screen-index": e.target.value,
+                                    })
+                                  }
+                                ></input>
+                              </div>
+                            </div>
+                            <div className=" col-12 d-flex justify-content-center align-items-center">
+                              <button
+                                type="submit"
+                                className="action_btn mt-4"
+                                onClick={handleUpdate}
+                              >
+                                {" "}
+                                {loader ? (
+                                  <>
+                                    {" "}
+                                    <div
+                                      class="spinner-border me-2"
+                                      role="status"
+                                    ></div>
+                                  </>
+                                ) : (
+                                  <>Update</>
+                                )}
+                              </button>
+                            </div>
                           </div>
-                        </div>
-                        <div className="col-6">
-                          <div className="input_box mt-3">
-                            <label htmlFor="email" className="input_label">
-                              Head-Color Hex
-                            </label>
-                            <input
-                              type={"text"}
-                              class="form-control"
-                              id="email"
-                            ></input>
-                          </div>
-                        </div>
-                        <div className="col-6">
-                          <div className="input_box mt-3">
-                            <label htmlFor="email" className="input_label">
-                              SubHead-Color Hex
-                            </label>
-                            <input
-                              type={"text"}
-                              class="form-control"
-                              id="email"
-                            ></input>
-                          </div>
-                        </div>
-                        <div className="col-6">
-                          <div className="input_box mt-3">
-                            <label htmlFor="email" className="input_label">
-                              Button-Color Hex
-                            </label>
-                            <input
-                              type={"text"}
-                              class="form-control"
-                              id="email"
-                            ></input>
-                          </div>
-                        </div>
-                        <div className="col-6">
-                          <div className="input_box mt-3">
-                            <label htmlFor="email" className="input_label">
-                              Btn-text-Color Hex
-                            </label>
-                            <input
-                              type={"text"}
-                              class="form-control"
-                              id="email"
-                            ></input>
-                          </div>
-                        </div>
-                        <div className="col-6">
-                          <div className="input_box mt-3">
-                            <label htmlFor="email" className="input_label">
-                              Screen Index
-                            </label>
-                            <input
-                              type={"text"}
-                              class="form-control"
-                              id="email"
-                            ></input>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="d-flex justify-content-center align-items-center">
-                        {" "}
-                        <button className="action_btn mt-4">Add Screen</button>
-                      </div>
+                        </Form>
+                      </Formik>
                     </div>
                   </div>
                 </div>
@@ -319,246 +504,251 @@ const BoardingScreens = () => {
                 ></button>
               </div>
               <div class="offcanvas-body ">
-                
                 <Formik>
                   <Form>
                     <div className="row">
                       <div className="col-12">
-                    <div className="input_box mt-3">
-                      <label htmlFor="email" className="input_label">
-                        Image URL
-                      </label>
-                      <div className="upload_box">
+                        <div className="input_box mt-3">
+                          <label htmlFor="file1" className="input_label">
+                            Image URL
+                          </label>
+                          <div className="upload_box">
+                            <input
+                              type="file"
+                              name="image"
+                              id="file1"
+                              // onChange={(e)=>handleInput(e,ADD)}
+                              onChange={(e) =>
+                                setNewScreen({
+                                  ...newScreen,
+                                  image: e.target.files[0],
+                                })
+                              }
+                            />
+                            <label
+                              htmlFor="file1"
+                              className=" d-flex flex-column align-items-center justify-content-center"
+                            >
+                              <img src={upload_image} alt="" />
+                              <span>Upload Image </span>
+                            </label>
+                          </div>
+                        </div>
+                        {newScreen.image ? (
+                          <>
+                            <div className=" image_preview mt-3">
+                              <img
+                                src={URL.createObjectURL(newScreen.image)}
+                                alt=""
+                              />
+                            </div>
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
+                      <div className="col-12">
+                        <div className="input_box mt-3">
+                          <label htmlFor="email" className="input_label">
+                            Heading
+                          </label>
+                          <input
+                            type={"text"}
+                            class="form-control"
+                            id="email"
+                            name="head"
+                            // onChange={(e) => handleInput(e, ADD)}
+                            onChange={(e) =>
+                              setNewScreen({
+                                ...newScreen,
+                                head: e.target.value,
+                              })
+                            }
+                          ></input>
+                        </div>
+                      </div>
+                      <div className="col-12"></div>
+                      <div className="input_box mt-3">
+                        <label htmlFor="email" className="input_label">
+                          Sub Head
+                        </label>
                         <input
-                          type="file"
-                          name="image"
-                          id="file"
-                          // onChange={(e)=>handleInput(e,ADD)}
+                          type={"text"}
+                          class="form-control"
+                          id="email"
+                          name="subhead"
+                          // onChange={(e) => handleInput(e, ADD)}
                           onChange={(e) =>
                             setNewScreen({
                               ...newScreen,
-                              image: e.target.files[0],
+                              subhead: e.target.value,
                             })
                           }
-                        />
-                        <label
-                          htmlFor="file"
-                          className=" d-flex flex-column align-items-center justify-content-center"
-                        >
-                          <img src={upload_image} alt="" />
-                          <span>Upload Image </span>
+                        ></input>
+                      </div>
+                      <div className="col-12"></div>
+                      <div className="input_box mt-3">
+                        <label htmlFor="email" className="input_label">
+                          Button Text
                         </label>
+                        <input
+                          type={"text"}
+                          class="form-control"
+                          id="email"
+                          name="button-text"
+                          // onChange={(e) => handleInput(e, ADD)}
+                          onChange={(e) =>
+                            setNewScreen({
+                              ...newScreen,
+                              "button-text": e.target.value,
+                            })
+                          }
+                        ></input>
                       </div>
-                    </div>
-                    {newScreen.image ? (
-                      <>
-                        <div className=" image_preview mt-3">
-                          <img
-                            src={URL.createObjectURL(newScreen.image)}
-                            alt=""
-                          />
+
+                      <div className="col-6">
+                        <div className="input_box mt-3">
+                          <label htmlFor="email" className="input_label">
+                            BG-Color Hex
+                          </label>
+                          <input
+                            type={"text"}
+                            class="form-control"
+                            id="email"
+                            name="bg-color"
+                            // onChange={(e) => handleInput(e, ADD)}
+                            onChange={(e) =>
+                              setNewScreen({
+                                ...newScreen,
+                                "bg-color": e.target.value,
+                              })
+                            }
+                          ></input>
                         </div>
-                      </>
-                    ) : (
-                      <></>
-                    )}
-                      </div>
-                      <div className="col-12">
-                    <div className="input_box mt-3">
-                      <label htmlFor="email" className="input_label">
-                        Heading
-                      </label>
-                      <input
-                        type={"text"}
-                        class="form-control"
-                        id="email"
-                        name="head"
-                        // onChange={(e) => handleInput(e, ADD)}
-                        onChange={(e) =>
-                          setNewScreen({ ...newScreen, head: e.target.value })
-                        }
-                      ></input>
-                    </div>
-                      </div>
-                      <div className="col-12"></div>
-                      <div className="input_box mt-3">
-                    <label htmlFor="email" className="input_label">
-                      Sub Head
-                    </label>
-                    <input
-                      type={"text"}
-                      class="form-control"
-                      id="email"
-                      name="subhead"
-                      // onChange={(e) => handleInput(e, ADD)}
-                      onChange={(e) =>
-                        setNewScreen({ ...newScreen, subhead: e.target.value })
-                      }
-                    ></input>
-                      </div>
-                      <div className="col-12"></div>
-                      <div className="input_box mt-3">
-                    <label htmlFor="email" className="input_label">
-                      Button Text
-                    </label>
-                    <input
-                      type={"text"}
-                      class="form-control"
-                      id="email"
-                      name="button-text"
-                      // onChange={(e) => handleInput(e, ADD)}
-                      onChange={(e) =>
-                        setNewScreen({
-                          ...newScreen,
-                          "button-text": e.target.value,
-                        })
-                      }
-                    ></input>
-                      </div>
-    
-                      <div className="col-6">
-                    <div className="input_box mt-3">
-                      <label htmlFor="email" className="input_label">
-                        BG-Color Hex
-                      </label>
-                      <input
-                        type={"text"}
-                        class="form-control"
-                        id="email"
-                        name="bg-color"
-                        // onChange={(e) => handleInput(e, ADD)}
-                        onChange={(e) =>
-                          setNewScreen({
-                            ...newScreen,
-                            "bg-color": e.target.value,
-                          })
-                        }
-                      ></input>
-                    </div>
                       </div>
                       <div className="col-6">
-                    <div className="input_box mt-3">
-                      <label htmlFor="email" className="input_label">
-                        Head-Color Hex
-                      </label>
-                      <input
-                        type={"text"}
-                        class="form-control"
-                        id="email"
-                        name="head-color"
-                        // onChange={(e) => handleInput(e, ADD)}
-                        onChange={(e) =>
-                          setNewScreen({
-                            ...newScreen,
-                            "head-color": e.target.value,
-                          })
-                        }
-                      ></input>
-                    </div>
+                        <div className="input_box mt-3">
+                          <label htmlFor="email" className="input_label">
+                            Head-Color Hex
+                          </label>
+                          <input
+                            type={"text"}
+                            class="form-control"
+                            id="email"
+                            name="head-color"
+                            // onChange={(e) => handleInput(e, ADD)}
+                            onChange={(e) =>
+                              setNewScreen({
+                                ...newScreen,
+                                "head-color": e.target.value,
+                              })
+                            }
+                          ></input>
+                        </div>
                       </div>
                       <div className="col-6">
-                    <div className="input_box mt-3">
-                      <label htmlFor="email" className="input_label">
-                        SubHead-Color Hex
-                      </label>
-                      <input
-                        type={"text"}
-                        class="form-control"
-                        id="email"
-                        name="text-color"
-                        // onChange={(e) => handleInput(e, ADD)}
-                        onChange={(e) =>
-                          setNewScreen({
-                            ...newScreen,
-                            "text-color": e.target.value,
-                          })
-                        }
-                      ></input>
-                    </div>
+                        <div className="input_box mt-3">
+                          <label htmlFor="email" className="input_label">
+                            SubHead-Color Hex
+                          </label>
+                          <input
+                            type={"text"}
+                            class="form-control"
+                            id="email"
+                            name="text-color"
+                            // onChange={(e) => handleInput(e, ADD)}
+                            onChange={(e) =>
+                              setNewScreen({
+                                ...newScreen,
+                                "text-color": e.target.value,
+                              })
+                            }
+                          ></input>
+                        </div>
                       </div>
                       <div className="col-6">
-                    <div className="input_box mt-3">
-                      <label htmlFor="email" className="input_label">
-                        Button-Color Hex
-                      </label>
-                      <input
-                        type={"text"}
-                        class="form-control"
-                        id="email"
-                        name="button-color"
-                        // onChange={(e) => handleInput(e, ADD)}
-                        onChange={(e) =>
-                          setNewScreen({
-                            ...newScreen,
-                            "button-color": e.target.value,
-                          })
-                        }
-                      ></input>
-                    </div>
+                        <div className="input_box mt-3">
+                          <label htmlFor="email" className="input_label">
+                            Button-Color Hex
+                          </label>
+                          <input
+                            type={"text"}
+                            class="form-control"
+                            id="email"
+                            name="button-color"
+                            // onChange={(e) => handleInput(e, ADD)}
+                            onChange={(e) =>
+                              setNewScreen({
+                                ...newScreen,
+                                "button-color": e.target.value,
+                              })
+                            }
+                          ></input>
+                        </div>
                       </div>
                       <div className="col-6">
-                    <div className="input_box mt-3">
-                      <label htmlFor="email" className="input_label">
-                        Btn-text-Color Hex
-                      </label>
-                      <input
-                        type={"text"}
-                        class="form-control"
-                        id="email"
-                        name="button-text-color"
-                        // onChange={(e) => handleInput(e, ADD)}
-                        onChange={(e) =>
-                          setNewScreen({
-                            ...newScreen,
-                            "button-text-color": e.target.value,
-                          })
-                        }
-                      ></input>
-                    </div>
+                        <div className="input_box mt-3">
+                          <label htmlFor="email" className="input_label">
+                            Btn-text-Color Hex
+                          </label>
+                          <input
+                            type={"text"}
+                            class="form-control"
+                            id="email"
+                            name="button-text-color"
+                            // onChange={(e) => handleInput(e, ADD)}
+                            onChange={(e) =>
+                              setNewScreen({
+                                ...newScreen,
+                                "button-text-color": e.target.value,
+                              })
+                            }
+                          ></input>
+                        </div>
                       </div>
                       <div className="col-6">
-                    <div className="input_box mt-3">
-                      <label htmlFor="email" className="input_label">
-                        Screen Index
-                      </label>
-                      <input
-                        type={"text"}
-                        class="form-control"
-                        id="email"
-                        name="screen-index"
-                        // onChange={(e) => handleInput(e, ADD)}
-                        onChange={(e) =>
-                          setNewScreen({
-                            ...newScreen,
-                            "screen-index": e.target.value,
-                          })
-                        }
-                      ></input>
-                    </div>
+                        <div className="input_box mt-3">
+                          <label htmlFor="email" className="input_label">
+                            Screen Index
+                          </label>
+                          <input
+                            type={"text"}
+                            class="form-control"
+                            id="email"
+                            name="screen-index"
+                            // onChange={(e) => handleInput(e, ADD)}
+                            onChange={(e) =>
+                              setNewScreen({
+                                ...newScreen,
+                                "screen-index": e.target.value,
+                              })
+                            }
+                          ></input>
+                        </div>
                       </div>
                       <div className=" col-12 d-flex justify-content-center align-items-center">
-                  <button
-                    type="submit"
-                    className="action_btn mt-4"
-                    onClick={handleAdd}
-                  >
-                    {" "}
-                    {loader ? (
-                      <>
-                        {" "}
-                        <div class="spinner-border me-2" role="status"></div>
-                      </>
-                    ) : (
-                      <>Update</>
-                    )}
-                  </button>
+                        <button
+                          type="submit"
+                          className="action_btn mt-4"
+                          onClick={handleAdd}
+                        >
+                          {" "}
+                          {loader ? (
+                            <>
+                              {" "}
+                              <div
+                                class="spinner-border me-2"
+                                role="status"
+                              ></div>
+                            </>
+                          ) : (
+                            <>Add</>
+                          )}
+                        </button>
                       </div>
                     </div>
                   </Form>
                 </Formik>
-                
-               
-       
               </div>
             </div>
             {/* =============================================================== */}

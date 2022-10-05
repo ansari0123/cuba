@@ -6,20 +6,23 @@ import Modal from "react-bootstrap/Modal";
 import upload_image from "../../assets/images/upload_image.svg";
 
 const CampaignWizard = () => {
-  // add product dialog handling
+  const [setup, setSetup] = useState(0);
+  const [pageNo, setPageNo] = useState(0);
   const [show, setShow] = useState(false);
+  const [categoryType, setCategoryType] = useState(true);
+
+  // add product dialog handling
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [pageNo, setPageNo] = useState(0);
-
+  // handling pages
   const handleNext = () => {
     setPageNo(pageNo + 1);
   };
   const handlePrevious = () => {
     setPageNo(pageNo - 1);
   };
-  const [categoryType, setCategoryType] = useState(true);
+
   return (
     <>
       <div className="main_container">
@@ -30,20 +33,52 @@ const CampaignWizard = () => {
           <Header />
           <div className="content_background">
             <div className="content">
+              <div className="action_bar">
+                <h4>Waiting User List</h4>
+              </div>
               {/* ===================================== PAGE TITILES  STARTS============================== */}
 
-              <div className="row">
-                <div className="col-4">
+              <div
+                className="row"
+                style={{
+                  height: "40px",
+                }}
+              >
+                <div
+                  className={`col-4 h-100 ${
+                    pageNo > 0
+                      ? "completed"
+                      : pageNo < 0
+                      ? "not_completed"
+                      : "in_progress"
+                  }`}
+                >
                   <div className="step_title h-100 w-100 d-flex justify-content-center align-items-center">
                     1 Campaign Setup
                   </div>
                 </div>
-                <div className="col-4">
+                <div
+                  className={`col-4 h-100 ${
+                    pageNo > 1
+                      ? "completed"
+                      : pageNo < 1
+                      ? "not_completed"
+                      : "in_progress"
+                  }`}
+                >
                   <div className="step_title h-100 w-100 d-flex justify-content-center align-items-center">
                     2 Products Setup
                   </div>
                 </div>
-                <div className="col-4">
+                <div
+                  className={`col-4 h-100 ${
+                    pageNo > 2
+                      ? "completed"
+                      : pageNo < 2
+                      ? "not_completed"
+                      : "in_progress"
+                  }`}
+                >
                   <div className="step_title h-100 w-100 d-flex justify-content-center align-items-center">
                     3 Per Day Setup
                   </div>
@@ -57,223 +92,309 @@ const CampaignWizard = () => {
                   <>
                     <div className="row">
                       <div className="col-6">
-                        <div className="input_box mt-3 horizantal_input">
-                          <label htmlFor="email" className="input_label">
-                            Retailer
-                          </label>
-                          <select
-                            class="form-select"
-                            aria-label="Default select example"
-                          >
-                            <option value="select">Select Status</option>
-                            <option value="1">Active</option>
-                            <option value="0">In Active</option>
-                          </select>
-                        </div>
-                        <div className="input_box mt-3 horizantal_input">
-                          <label htmlFor="email" className="input_label">
-                            Platform
-                          </label>
-                          <select
-                            class="form-select"
-                            aria-label="Default select example"
-                          >
-                            <option value="select">Select Status</option>
-                            <option value="1">Active</option>
-                            <option value="0">In Active</option>
-                          </select>
-                        </div>
-                        <div className="input_box mt-3 horizantal_input">
-                          <label htmlFor="email" className="input_label">
-                            Category
-                          </label>
-                          <select
-                            class="form-select"
-                            aria-label="Default select example"
-                            onChange={(e) => setCategoryType(e.target.value)}
-                          >
-                            <option value="select">Select Status</option>
-                            <option value="1">By Product</option>
-                            <option value="0">Traffic</option>
-                          </select>
-                        </div>
-                        {}
                         <div className="row mt-2">
                           <div className="col-4">
-                            <div className="hr_label">
-                              Days gap between orders
-                            </div>
+                            <div className="hr_label">Retailer</div>
                           </div>
                           <div className="col-8">
-                            <input type="number" className="hr_input w-100" />
+                            <select
+                              class="form-select"
+                              aria-label="Default select example"
+                            >
+                              <option value="select">Select Status</option>
+                              <option value="1">Active</option>
+                              <option value="0">In Active</option>
+                            </select>
                           </div>
                         </div>
-                        <div className="input_box mt-3 ">
-                          <label htmlFor="email" className="input_label">
-                            Exclusive Product
-                          </label>
-                          <div className="radio-holder d-flex ">
-                            <div className="radio_box">
-                              <input type="radio" name="eProduct" id="order2" />
-                              <label htmlFor="order2">Yes</label>
-                            </div>
-                            <div className="radio_box">
-                              <input type="radio" name="eProduct" id="order3" />
-                              <label htmlFor="order3">No</label>
-                            </div>
-                          </div>
-                        </div>
+
                         <div className="row mt-2">
                           <div className="col-4">
-                            <div className="hr_label">Timeline Days</div>
+                            <div className="hr_label"> Platform</div>
                           </div>
                           <div className="col-8">
-                            <input type="number" className="hr_input w-100" />
+                            <select
+                              class="form-select"
+                              aria-label="Default select example"
+                            >
+                              <option value="select">Select Status</option>
+                              <option value="1">Active</option>
+                              <option value="0">In Active</option>
+                            </select>
                           </div>
                         </div>
+
+                        <div className="row mt-2">
+                          <div className="col-4">
+                            <div className="hr_label"> Category</div>
+                          </div>
+                          <div className="col-8">
+                            <select
+                              class="form-select"
+                              aria-label="Default select example"
+                              onChange={(e) => setCategoryType(e.target.value)}
+                            >
+                              <option value="select">Select Status</option>
+                              <option value="1">By Product</option>
+                              <option value="0">Traffic</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        {categoryType == 1 ? (
+                          <>
+                            <div className="row mt-2">
+                              <div className="col-4">
+                                <div className="hr_label">
+                                  {" "}
+                                  Days gap between orders
+                                </div>
+                              </div>
+                              <div className="col-8">
+                                <input
+                                  type="number"
+                                  className="hr_input w-100"
+                                />
+                              </div>
+                            </div>
+
+                            <div className="row mt-2">
+                              <div className="col-4">
+                                <div className="hr_label">
+                                  Exclusive Product
+                                </div>
+                              </div>
+                              <div className="col-8">
+                                <div className="radio-holder d-flex ">
+                                  <div className="radio_box">
+                                    <input
+                                      type="radio"
+                                      name="eProduct"
+                                      id="order2"
+                                    />
+                                    <label htmlFor="order2">Yes</label>
+                                  </div>
+                                  <div className="radio_box">
+                                    <input
+                                      type="radio"
+                                      name="eProduct"
+                                      id="order3"
+                                    />
+                                    <label htmlFor="order3">No</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="row mt-2">
+                              <div className="col-4">
+                                <div className="hr_label">Timeline Days</div>
+                              </div>
+                              <div className="col-8">
+                                <input
+                                  type="number"
+                                  className="hr_input w-100"
+                                />
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          <></>
+                        )}
                       </div>
                       <div className="col-6">
-                        <div className="input_box mt-3 d-flex horizantal_input d-flex align-items-center">
-                          <label htmlFor="email" className="input_label">
-                            Targeting
-                          </label>
-                          <input
-                            type="checkbox"
-                            name="all"
-                            id="all"
-                            className="ms-3"
-                          />
-                          <span className="ms-2">All</span>
+                        <div className="row mt-2">
+                          <div className="col-4">
+                            <div className="hr_label"> Targeting</div>
+                          </div>
+                          <div className="col-8">
+                            <input
+                              type="checkbox"
+                              name="all"
+                              id="all"
+                              className="ms-3"
+                            />
+                            <span className="ms-2">All</span>
+                          </div>
                         </div>
-                        <div className="input_box mt-3 ">
-                          <label htmlFor="email" className="input_label">
-                            Gender
-                          </label>
-                          <div className="radio-holder d-flex ">
-                            <div className="radio_box">
-                              <input type="radio" name="order" id="order1" />
-                              <label htmlFor="order1">All</label>
-                            </div>
-                            <div className="radio_box">
-                              <input type="radio" name="order" id="order2" />
-                              <label htmlFor="order2">Male</label>
-                            </div>
-                            <div className="radio_box">
-                              <input type="radio" name="order" id="order3" />
-                              <label htmlFor="order3">Female</label>
+
+                        <div className="row mt-2">
+                          <div className="col-4">
+                            <div className="hr_label"> Gender</div>
+                          </div>
+                          <div className="col-8">
+                            <div className="radio-holder d-flex ">
+                              <div className="radio_box">
+                                <input type="radio" name="order" id="order1" />
+                                <label htmlFor="order1">All</label>
+                              </div>
+                              <div className="radio_box">
+                                <input type="radio" name="order" id="order2" />
+                                <label htmlFor="order2">Male</label>
+                              </div>
+                              <div className="radio_box">
+                                <input type="radio" name="order" id="order3" />
+                                <label htmlFor="order3">Female</label>
+                              </div>
                             </div>
                           </div>
                         </div>
-                        <div className="input_box mt-3 ">
-                          <label htmlFor="email" className="input_label">
-                            Age
-                          </label>
-                          <select
-                            class="form-select"
-                            aria-label="Default select example"
-                          >
-                            <option value="select">Select Status</option>
-                            <option value="1">Active</option>
-                            <option value="0">In Active</option>
-                          </select>
+
+                        <div className="row mt-2">
+                          <div className="col-4">
+                            <div className="hr_label"> Age</div>
+                          </div>
+                          <div className="col-8">
+                            <select
+                              class="form-select"
+                              aria-label="Default select example"
+                            >
+                              <option value="select">Select Status</option>
+                              <option value="1">Active</option>
+                              <option value="0">In Active</option>
+                            </select>
+                          </div>
                         </div>
-                        <div className="input_box mt-3 ">
-                          <label htmlFor="email" className="input_label">
-                            Income
-                          </label>
-                          <select
-                            class="form-select"
-                            aria-label="Default select example"
-                          >
-                            <option value="select">Select Status</option>
-                            <option value="1">Active</option>
-                            <option value="0">In Active</option>
-                          </select>
+
+                        <div className="row mt-2">
+                          <div className="col-4">
+                            <div className="hr_label"> Income</div>
+                          </div>
+                          <div className="col-8">
+                            <select
+                              class="form-select"
+                              aria-label="Default select example"
+                            >
+                              <option value="select">Select Status</option>
+                              <option value="1">Active</option>
+                              <option value="0">In Active</option>
+                            </select>
+                          </div>
                         </div>
-                        <div className="input_box mt-3 ">
-                          <label htmlFor="email" className="input_label">
-                            Merital St.
-                          </label>
-                          <div className="radio-holder d-flex ">
-                            <div className="radio_box">
-                              <input type="radio" name="order" id="order1" />
-                              <label htmlFor="order1">All</label>
-                            </div>
-                            <div className="radio_box">
-                              <input type="radio" name="order" id="order2" />
-                              <label htmlFor="order2">Merried</label>
-                            </div>
-                            <div className="radio_box">
-                              <input type="radio" name="order" id="order3" />
-                              <label htmlFor="order3">Single</label>
+
+                        <div className="row mt-2">
+                          <div className="col-4">
+                            <div className="hr_label"> Merital St.</div>
+                          </div>
+                          <div className="col-8">
+                            <div className="radio-holder d-flex ">
+                              <div className="radio_box">
+                                <input type="radio" name="order" id="order1" />
+                                <label htmlFor="order1">All</label>
+                              </div>
+                              <div className="radio_box">
+                                <input type="radio" name="order" id="order2" />
+                                <label htmlFor="order2">Merried</label>
+                              </div>
+                              <div className="radio_box">
+                                <input type="radio" name="order" id="order3" />
+                                <label htmlFor="order3">Single</label>
+                              </div>
                             </div>
                           </div>
                         </div>
-                        <div className="input_box mt-3">
-                          <label htmlFor="email" className="input_label">
-                            Having Kids
-                          </label>
-                          <div className="radio-holder d-flex ">
-                            <div className="radio_box">
-                              <input type="radio" name="order" id="order1" />
-                              <label htmlFor="order1">All</label>
-                            </div>
-                            <div className="radio_box">
-                              <input type="radio" name="order" id="order2" />
-                              <label htmlFor="order2">Yes</label>
-                            </div>
-                            <div className="radio_box">
-                              <input type="radio" name="order" id="order3" />
-                              <label htmlFor="order3">No</label>
+
+                        <div className="row mt-2">
+                          <div className="col-4">
+                            <div className="hr_label"> Having Kids</div>
+                          </div>
+                          <div className="col-8">
+                            <div className="radio-holder d-flex ">
+                              <div className="radio_box">
+                                <input type="radio" name="order" id="order1" />
+                                <label htmlFor="order1">All</label>
+                              </div>
+                              <div className="radio_box">
+                                <input type="radio" name="order" id="order2" />
+                                <label htmlFor="order2">Yes</label>
+                              </div>
+                              <div className="radio_box">
+                                <input type="radio" name="order" id="order3" />
+                                <label htmlFor="order3">No</label>
+                              </div>
                             </div>
                           </div>
                         </div>
-                        <div className="input_box mt-3 ">
-                          <label htmlFor="email" className="input_label">
-                            Occupation
-                          </label>
-                          <select
-                            class="form-select"
-                            aria-label="Default select example"
-                          >
-                            <option value="select">Select Status</option>
-                            <option value="1">Active</option>
-                            <option value="0">In Active</option>
-                          </select>
+
+                        <div className="row mt-2">
+                          <div className="col-4">
+                            <div className="hr_label"> Occupation</div>
+                          </div>
+                          <div className="col-8">
+                            <select
+                              class="form-select"
+                              aria-label="Default select example"
+                            >
+                              <option value="select">Select Status</option>
+                              <option value="1">Active</option>
+                              <option value="0">In Active</option>
+                            </select>
+                          </div>
                         </div>
-                        <div className="input_box mt-3">
-                          <label htmlFor="email" className="input_label">
-                            Category Prefrances
-                          </label>
-                          <div className="radio-holder d-flex ">
-                            <div className="radio_box">
-                              <input type="checkbox" name="order" id="order1" />
-                              <label htmlFor="order1">All</label>
-                            </div>
-                            <div className="radio_box">
-                              <input type="checkbox" name="order" id="order2" />
-                              <label htmlFor="order2">Yes</label>
-                            </div>
-                            <div className="radio_box">
-                              <input type="checkbox" name="order" id="order3" />
-                              <label htmlFor="order3">No</label>
-                            </div>
-                            <br></br>
-                            <div className="radio_box">
-                              <input type="checkbox" name="order" id="order1" />
-                              <label htmlFor="order1">All</label>
-                            </div>
-                            <div className="radio_box">
-                              <input type="checkbox" name="order" id="order2" />
-                              <label htmlFor="order2">Yes</label>
-                            </div>
-                            <div className="radio_box">
-                              <input type="checkbox" name="order" id="order3" />
-                              <label htmlFor="order3">No</label>
-                            </div>
-                            <div className="radio_box">
-                              <input type="checkbox" name="order" id="order1" />
-                              <label htmlFor="order1">All</label>
+
+                        <div className="row mt-2">
+                          <div className="col-4">
+                            <div className="hr_label"> Category Prefrances</div>
+                          </div>
+                          <div className="col-8">
+                            <div className="radio-holder row ">
+                              <div className="radio_box col-3">
+                                <input
+                                  type="checkbox"
+                                  name="order"
+                                  id="order1"
+                                />
+                                <label htmlFor="order1">All</label>
+                              </div>
+                              <div className="radio_box col-3">
+                                <input
+                                  type="checkbox"
+                                  name="order"
+                                  id="order2"
+                                />
+                                <label htmlFor="order2">Yes</label>
+                              </div>
+                              <div className="radio_box col-3">
+                                <input
+                                  type="checkbox"
+                                  name="order"
+                                  id="order3"
+                                />
+                                <label htmlFor="order3">No</label>
+                              </div>
+                              <br></br>
+                              <div className="radio_box col-3">
+                                <input
+                                  type="checkbox"
+                                  name="order"
+                                  id="order1"
+                                />
+                                <label htmlFor="order1">All</label>
+                              </div>
+                              <div className="radio_box col-3">
+                                <input
+                                  type="checkbox"
+                                  name="order"
+                                  id="order2"
+                                />
+                                <label htmlFor="order2">Yes</label>
+                              </div>
+                              <div className="radio_box col-3">
+                                <input
+                                  type="checkbox"
+                                  name="order"
+                                  id="order3"
+                                />
+                                <label htmlFor="order3">No</label>
+                              </div>
+                              <div className="radio_box col-3">
+                                <input
+                                  type="checkbox"
+                                  name="order"
+                                  id="order1"
+                                />
+                                <label htmlFor="order1">All</label>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -639,56 +760,158 @@ const CampaignWizard = () => {
                       <div className="col-8">
                         <div className="radio-holder d-flex ">
                           <div className="radio_box">
-                            <input type="radio" name="sOption" id="same" />
+                            <input
+                              type="radio"
+                              name="sOption"
+                              id="same"
+                              onChange={(e) => setSetup(0)}
+                              checked={setup == 0}
+                            />
                             <label htmlFor="same">Same all days</label>
                           </div>
                           <div className="radio_box">
-                            <input type="radio" name="sOption" id="gradual" />
+                            <input
+                              type="radio"
+                              name="sOption"
+                              id="gradual"
+                              onChange={(e) => setSetup(1)}
+                              checked={setup == 1}
+                            />
                             <label htmlFor="gradual">Gradual growth</label>
                           </div>
                           <div className="radio_box">
-                            <input type="radio" name="sOption" id="custom" />
+                            <input
+                              type="radio"
+                              name="sOption"
+                              id="custom"
+                              onChange={(e) => setSetup(2)}
+                              checked={setup == 2}
+                            />
                             <label htmlFor="custom">Fully Custom</label>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <table class="table mt-3">
-                      <thead className="table_head">
-                        <tr>
-                          <th scope="col">Date</th>
-                          <th scope="col">Target</th>
-                          <th scope="col">Total</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>2022-09-23</td>
-                          <td>20</td>
-                          <td>20</td>
-                        </tr>
-                        <tr>
-                          <td>2022-09-23</td>
-                          <td>20</td>
-                          <td>20</td>
-                        </tr>
-                        <tr>
-                          <td>2022-09-23</td>
-                          <td>20</td>
-                          <td>20</td>
-                        </tr>
-                        <tr>
-                          <td>2022-09-23</td>
-                          <td>20</td>
-                          <td>20</td>
-                        </tr>
-                        <tr>
-                          <td>2022-09-23</td>
-                          <td>20</td>
-                          <td>20</td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    {setup == 0 ? (
+                      <>
+                        {" "}
+                        <table class="table mt-3">
+                          <thead className="table_head">
+                            <tr>
+                              <th scope="col">Date</th>
+                              <th scope="col">Target</th>
+                              <th scope="col">Total</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>2022-09-23</td>
+                              <td>20</td>
+                              <td>20</td>
+                            </tr>
+                            <tr>
+                              <td>2022-09-23</td>
+                              <td>20</td>
+                              <td>20</td>
+                            </tr>
+                            <tr>
+                              <td>2022-09-23</td>
+                              <td>20</td>
+                              <td>20</td>
+                            </tr>
+                            <tr>
+                              <td>2022-09-23</td>
+                              <td>20</td>
+                              <td>20</td>
+                            </tr>
+                            <tr>
+                              <td>2022-09-23</td>
+                              <td>20</td>
+                              <td>20</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </>
+                    ) : setup == 1 ? (
+                      <>
+                        {" "}
+                        <table class="table mt-3">
+                          <thead className="table_head">
+                            <tr>
+                              <th scope="col">Date</th>
+                              <th scope="col">Target</th>
+                              <th scope="col">Total</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>2022-09-23</td>
+                              <td>20</td>
+                              <td>20</td>
+                            </tr>
+                            <tr>
+                              <td>2022-09-23</td>
+                              <td>20</td>
+                              <td>20</td>
+                            </tr>
+                            <tr>
+                              <td>2022-09-23</td>
+                              <td>20</td>
+                              <td>20</td>
+                            </tr>
+                            <tr>
+                              <td>2022-09-23</td>
+                              <td>20</td>
+                              <td>20</td>
+                            </tr>
+                            <tr>
+                              <td>2022-09-23</td>
+                              <td>20</td>
+                              <td>20</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </>
+                    ) : (
+                      <>
+                        <table class="table mt-3">
+                          <thead className="table_head">
+                            <tr>
+                              <th scope="col">Date</th>
+                              <th scope="col">Target</th>
+                              <th scope="col">Total</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>2022-09-23</td>
+                              <td>20</td>
+                              <td>20</td>
+                            </tr>
+                            <tr>
+                              <td>2022-09-23</td>
+                              <td>20</td>
+                              <td>20</td>
+                            </tr>
+                            <tr>
+                              <td>2022-09-23</td>
+                              <td>20</td>
+                              <td>20</td>
+                            </tr>
+                            <tr>
+                              <td>2022-09-23</td>
+                              <td>20</td>
+                              <td>20</td>
+                            </tr>
+                            <tr>
+                              <td>2022-09-23</td>
+                              <td>20</td>
+                              <td>20</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </>
+                    )}
                   </>
                 ) : (
                   <></>

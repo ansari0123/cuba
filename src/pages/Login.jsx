@@ -3,9 +3,11 @@ import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import axios from "../axios/axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { UNSAFE_DataStaticRouterContext, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
+import { useSyncExternalStore } from "react";
 const Login = () => {
+  const [show, setShow] = useState(false);
   const { login, setLogin, token, setToken } = useContext(AppContext);
   const [loader, setLoader] = useState(false);
   const [data, setData] = useState({
@@ -23,7 +25,6 @@ const Login = () => {
         // setError('Email or Password does not match');
         setLoader(false);
         swal("Login Failed !", "Email or Password Wrong", "error");
-        
       });
       console.log(user.data);
       if (user.data) {
@@ -31,12 +32,11 @@ const Login = () => {
         setLoader(false);
         // localStorage.setItem('login',true);
         console.log(token);
-        
-        swal("Login Successful", "", "success");
+
+        // swal("Login Successful", "", "success");
         navigate("dashboard");
       } else {
         console.log(user);
-
       }
     }
   };
@@ -97,7 +97,7 @@ const Login = () => {
                   </label>
                   <div className="pass_input_wrapper ">
                     <input
-                      type="password"
+                      type={show ? "text" : "password"}
                       class="form-control pass_input"
                       id="password"
                       value={data.password}
@@ -105,7 +105,16 @@ const Login = () => {
                         setData({ ...data, password: e.target.value })
                       }
                     ></input>
-                    <span className="hide_show">Show</span>
+                    <span
+                      className="hide_show"
+                      onClick={() => setShow(!show)}
+                      style={{
+                        cursor: "pointer",
+                        userSelect: "false",
+                      }}
+                    >
+                      Show
+                    </span>
                   </div>
                 </div>
                 <div className="password_query d-flex flex-column flex-sm-row align-items-start align-items-sm-center justify-content-sm-between">
@@ -116,16 +125,14 @@ const Login = () => {
                   <button className="mt-2 mt-sm-0">Forgot password?</button>
                 </div>
                 <button className="action_btn" onClick={hadleLogin}>
-                  {
-                    loader?<> <div
-                    class="spinner-border me-2"
-                    role="status"
-                  ></div></>:<>
-                   Sign In
-                  </>
-                  }
-                 
-                 
+                  {loader ? (
+                    <>
+                      {" "}
+                      <div class="spinner-border me-2" role="status"></div>
+                    </>
+                  ) : (
+                    <>Sign In</>
+                  )}
                 </button>
               </form>
             </div>

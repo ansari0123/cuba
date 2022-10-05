@@ -11,3 +11,17 @@
 .add_product_modal{
     max-width: 89% !important;
 }
+.completed{
+    background-color: #B589F9 !important;
+}
+.not_completed{
+background-color: #D9D9D9 !important;
+}
+.in_progress{
+    background-color: #7366FF !important;
+}
+.step_title{
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}

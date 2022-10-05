@@ -2,9 +2,11 @@ import axios from "../../axios/axios";
 import react, { useState, useEffect } from "react";
 import add_plus from "../../assets/images/add_plus.svg";
 import swal from "sweetalert";
-import { ErrorMessage, Field, Form, Formik } from "formik";
-import * as yup from 'yup'
+import { ErrorMessage, input, Form, Formik } from "formik";
+import * as yup from "yup";
+import ReactPaginate from "react-paginate";
 const InviteCodes = () => {
+  const [pageCount, setPageCount] = useState(0);
   const [addData, setAddData] = useState({
     user_id: "",
     invite_code: "",
@@ -20,43 +22,44 @@ const InviteCodes = () => {
     add: "",
     update: "",
   });
-  const initialValuesAdd={
+  const initialValuesAdd = {
     user_id: "",
     invite_code: "",
     max_invites: "",
   };
-  const [updateData,setUpdateData]=useState({});
-  
-  
+  const [updateData, setUpdateData] = useState({});
+
   const validationSchemaAdd = yup.object().shape({
-    user_id:yup.number().required('Please Enter User Id'),
-    invite_code:yup.string().required('Please Enter Invite Code'),
-    max_invites: yup.string().required('Please Enter max invite')
-  })
+    user_id: yup.number().required("Please Enter User Id"),
+    invite_code: yup.string().required("Please Enter Invite Code"),
+    max_invites: yup.string().required("Please Enter max invite"),
+  });
 
   const fetchAllCodes = async () => {
-    const resp = await axios.get("/invite_codes", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    }).then((resp)=>{
-      setCodes(resp?.data?.data);
-      setLoading(false);
-      setMessage("");
-    }).catch((error)=>{
-      setLoading(false);
-      setMessage("No Code Found");
-    })
-
-   
-    
+    const resp = await axios
+      .get("/invite_codes", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((resp) => {
+        setCodes(resp?.data?.data);
+        setLoading(false);
+        setMessage("");
+        setPageCount(Math.ceil(resp.data?.data.length / 8));
+        console.log("pageCount", pageCount);
+        updatePageItems(1);
+      })
+      .catch((error) => {
+        setLoading(false);
+        setMessage("No Code Found");
+      });
   };
 
   useEffect(() => {
     fetchAllCodes();
+    // updatePageItems(1);
   }, []);
- 
-
 
   const handleAdd = async (values) => {
     // e.preventDefault();
@@ -89,29 +92,55 @@ const InviteCodes = () => {
         });
     }
   };
-  const handleUpdate= async ()=>{
+  const handleUpdate = async () => {
     setLoader(true);
-    const fetchUpdate= await axios.put("/invite_codes/update",{
-      "id":updateData?.id, 
-"user_id": updateData?.user_id, 
-"invite_code": updateData?.invite_code, 
-"max_invites": updateData?.max_invites, 
-"status" : updateData?.status 
-    },{ headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    }}).then((resp)=>{
-      console.log(resp)
-      setLoader(false)
-      fetchAllCodes()
-      swal("Code updated Successfully", "", "success");
+    const fetchUpdate = await axios
+      .put(
+        "/invite_codes/update",
+        {
+          id: updateData?.id,
+          user_id: updateData?.user_id,
+          invite_code: updateData?.invite_code,
+          max_invites: updateData?.max_invites,
+          status: updateData?.status,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((resp) => {
+        console.log(resp);
+        setLoader(false);
+        fetchAllCodes();
+        swal("Code updated Successfully", "", "success");
+      })
+      .catch((errror) => {
+        console.log(error);
+        setLoader(false);
+        swal("Code not updated", "", "error");
+      });
+  };
 
-    }).catch((errror)=>{
-      console.log(error)
-      setLoader(false)
-      swal("Code not updated", "", "error");
+  const [pageItems, setPageItems] = useState([]);
 
-    })
-  }
+  const updatePageItems = (pageNo) => {
+    const end = pageNo * 8;
+    const start = end - 8;
+    const items = codes.slice(start, end);
+    setPageItems(items);
+    console.log(pageItems);
+  };
+  useEffect(() => {
+    const items = codes.slice(0, 8);
+    setPageItems(items);
+    console.log(pageItems);
+  }, [codes]);
+  // handle page change
+  const handlePageChange = (data) => {
+    updatePageItems(data.selected + 1);
+  };
   return (
     <>
       <div className="content">
@@ -148,35 +177,35 @@ const InviteCodes = () => {
               ></button>
             </div>
             <div class="offcanvas-body">
-              <Formik 
+              {/* <Formik 
               initialValues={initialValuesAdd}
               validationSchema={validationSchemaAdd}
               onSubmit={handleAdd}
               >
-                <Form>
-                <div className="input_box mt-3">
+                <Form> */}
+              <div className="input_box mt-3">
                 <label htmlFor="email" className="input_label">
                   User
                 </label>
-                   <Field
-                   type='number'
-                   name='user_id'
-                 class="form-control"
+                <input
+                  type="number"
+                  name="user_id"
+                  class="form-control"
                   id="number"
                   value={addData.user_id}
                   onChange={(e) =>
                     setAddData({ ...addData, user_id: e.target.value })
                   }
                 />
-                <small className="text-danger"><ErrorMessage name="user_id"/></small>
+                <small className="text-danger"></small>
               </div>
               <div className="input_box mt-5">
                 <label htmlFor="email" className="input_label">
                   Invite Code
                 </label>
-                <Field
-                type='text'
-                name='invite_code'
+                <input
+                  type="text"
+                  name="invite_code"
                   class="form-control"
                   id="email"
                   value={addData.invite_code}
@@ -184,26 +213,30 @@ const InviteCodes = () => {
                     setAddData({ ...addData, invite_code: e.target.value })
                   }
                 />
-                 <small className="text-danger"><ErrorMessage name="invite_code"/></small>
+                <small className="text-danger"></small>
               </div>
               <div className="input_box mt-5">
                 <label htmlFor="email" className="input_label">
                   Max Invites
                 </label>
-                <Field
+                <input
                   type="number"
-                  name='max_invites'
+                  name="max_invites"
                   class="form-control"
                   id="email"
                   value={addData.max_invites}
                   onChange={(e) =>
                     setAddData({ ...addData, max_invites: e.target.value })
                   }
-                ></Field>
-                 <small className="text-danger"><ErrorMessage name="max_invites"/></small>
+                ></input>
+                <small className="text-danger"></small>
               </div>
               <div className="d-flex justify-content-center mt-5">
-                <button type="submit" className="action_btn">
+                <button
+                  type="submit"
+                  className="action_btn"
+                  onClick={handleAdd}
+                >
                   {" "}
                   {loader ? (
                     <>
@@ -216,10 +249,9 @@ const InviteCodes = () => {
                 </button>
               </div>
 
-                </Form>
+              {/* </Form>
 
-              </Formik>
-             
+              </Formik> */}
             </div>
           </div>
           {/* ============================================ */}
@@ -266,7 +298,7 @@ const InviteCodes = () => {
             ) : (
               <></>
             )}
-            {codes?.map((code, index) => {
+            {pageItems?.map((code, index) => {
               return (
                 <>
                   <tr>
@@ -291,7 +323,7 @@ const InviteCodes = () => {
                         data-bs-toggle="offcanvas"
                         data-bs-target={`#staticBackdropUpdate${index}`}
                         aria-controls="staticBackdrop"
-                        onClick={()=>setUpdateData(code)}
+                        onClick={() => setUpdateData(code)}
                       >
                         @ Edit
                       </button>
@@ -317,7 +349,6 @@ const InviteCodes = () => {
                       ></button>
                     </div>
                     <div class="offcanvas-body">
-               
                       <div className="input_box mt-3">
                         <label htmlFor="email" className="input_label">
                           User id
@@ -326,8 +357,14 @@ const InviteCodes = () => {
                           type="number"
                           class="form-control"
                           id="email"
-                          value={updateData.user_id}
-                          onChange={(e)=>setUpdateData({...updateData,user_id:e.target.value})}
+                          defaultValue={updateData.user_id}
+                          readOnly="true"
+                          onChange={(e) =>
+                            setUpdateData({
+                              ...updateData,
+                              user_id: e.target.value,
+                            })
+                          }
                         ></input>
                       </div>
                       <div className="input_box mt-5">
@@ -338,9 +375,14 @@ const InviteCodes = () => {
                           type="email"
                           class="form-control"
                           id="email"
+                          readOnly={true}
                           value={updateData.invite_code}
-                          onChange={(e)=>setUpdateData({...updateData,invite_code:e.target.value})}
-
+                          onChange={(e) =>
+                            setUpdateData({
+                              ...updateData,
+                              invite_code: e.target.value,
+                            })
+                          }
                         ></input>
                       </div>
                       <div className="input_box mt-5">
@@ -352,8 +394,12 @@ const InviteCodes = () => {
                           class="form-control"
                           id="email"
                           value={updateData.max_invites}
-                          onChange={(e)=>setUpdateData({...updateData, max_invites:e.target.value})}
-
+                          onChange={(e) =>
+                            setUpdateData({
+                              ...updateData,
+                              max_invites: e.target.value,
+                            })
+                          }
                         ></input>
                       </div>
                       <div className="input_box mt-5">
@@ -363,13 +409,18 @@ const InviteCodes = () => {
                         <select
                           class="form-select"
                           aria-label="Default select example"
-                          vlaue={updateData.status}
-                          onChange={(e)=>setUpdateData({...updateData,status:e.target.value})}
-
+                          onChange={(e) =>
+                            setUpdateData({
+                              ...updateData,
+                              status: e.target.value,
+                            })
+                          }
                         >
-                          <option value='select'>Select Status</option>
-                          <option value="1">Active</option>
-                          <option value='0'>In Active</option>
+                          <option value="select">Select Status</option>
+                          <option value="1" selected={true}>
+                            Active
+                          </option>
+                          <option value="0">In Active</option>
                         </select>
                       </div>
                       <div className="d-flex justify-content-center mt-5">
@@ -378,15 +429,20 @@ const InviteCodes = () => {
                           // value="Update"
                           className="action_btn"
                           onClick={handleUpdate}
-
-                        > {loader ? (
-                          <>
-                            {" "}
-                            <div class="spinner-border me-2" role="status"></div>
-                          </>
-                        ) : (
-                          <>Update</>
-                        )}</button>
+                        >
+                          {" "}
+                          {loader ? (
+                            <>
+                              {" "}
+                              <div
+                                class="spinner-border me-2"
+                                role="status"
+                              ></div>
+                            </>
+                          ) : (
+                            <>Update</>
+                          )}
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -395,6 +451,23 @@ const InviteCodes = () => {
             })}
           </tbody>
         </table>
+        <ReactPaginate
+          pageCount={pageCount}
+          onPageChange={handlePageChange}
+          previousLabel={"<"}
+          nextLabel={">"}
+          pageRangeDisplayed={5}
+          containerClassName={"pagination justify-content-end"}
+          pageClassName={"page-item"}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          activeClassName={"active"}
+        />
       </div>
     </>
   );
