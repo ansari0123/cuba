@@ -34,7 +34,7 @@ const CampaignWizard = () => {
           <div className="content_background">
             <div className="content">
               <div className="action_bar">
-                <h4>Waiting User List</h4>
+                <h4>Campaign Wizard</h4>
               </div>
               {/* ===================================== PAGE TITILES  STARTS============================== */}
 
@@ -274,7 +274,7 @@ const CampaignWizard = () => {
 
                         <div className="row mt-2">
                           <div className="col-4">
-                            <div className="hr_label"> Merital St.</div>
+                            <div className="hr_label"> Merital Status</div>
                           </div>
                           <div className="col-8">
                             <div className="radio-holder d-flex ">
@@ -284,7 +284,7 @@ const CampaignWizard = () => {
                               </div>
                               <div className="radio_box">
                                 <input type="radio" name="order" id="order2" />
-                                <label htmlFor="order2">Merried</label>
+                                <label htmlFor="order2">Married</label>
                               </div>
                               <div className="radio_box">
                                 <input type="radio" name="order" id="order3" />
@@ -334,7 +334,7 @@ const CampaignWizard = () => {
 
                         <div className="row mt-2">
                           <div className="col-4">
-                            <div className="hr_label"> Category Prefrances</div>
+                            <div className="hr_label"> Category preferences</div>
                           </div>
                           <div className="col-8">
                             <div className="radio-holder row ">

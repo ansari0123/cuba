@@ -244,7 +244,7 @@ const InviteCodes = () => {
                       <div class="spinner-border me-2" role="status"></div>
                     </>
                   ) : (
-                    <>Sign In</>
+                    <>Add Code</>
                   )}
                 </button>
               </div>
@@ -440,7 +440,7 @@ const InviteCodes = () => {
                               ></div>
                             </>
                           ) : (
-                            <>Update</>
+                            <>Update Code</>
                           )}
                         </button>
                       </div>

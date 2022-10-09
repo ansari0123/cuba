@@ -308,11 +308,12 @@ const Retailers = () => {
             <button className="export_btn me-5" onClick={onDownload}>
               Export
             </button>
-            <select className="option_select">
+            {/*  <select className="option_select">
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="30">30</option>
-            </select>
+            </select>*/}
+           
           </div>
         </div>
         {/* =========== OPTION BAR ENDS =================== */}

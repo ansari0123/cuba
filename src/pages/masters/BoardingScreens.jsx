@@ -100,8 +100,9 @@ const BoardingScreens = () => {
       }
     }
     if (formData) {
-      const resp = await axios
-        .post("/uspscreen/update", formData, {
+      try{
+          const resp = await axios
+        .put("/uspscreen/update", formData, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -117,6 +118,10 @@ const BoardingScreens = () => {
           setLoader(false);
           swal(err.message, "", "error");
         });
+      }catch(e){
+        swal(e.message,'','success')
+      }
+    
     }
   };
 

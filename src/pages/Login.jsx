@@ -113,7 +113,7 @@ const Login = () => {
                         userSelect: "false",
                       }}
                     >
-                      Show
+                      {show?'Hide':'Show'}
                     </span>
                   </div>
                 </div>
