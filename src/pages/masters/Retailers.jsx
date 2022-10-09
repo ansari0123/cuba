@@ -313,7 +313,6 @@ const Retailers = () => {
               <option value="20">20</option>
               <option value="30">30</option>
             </select>*/}
-           
           </div>
         </div>
         {/* =========== OPTION BAR ENDS =================== */}
@@ -371,34 +370,6 @@ const Retailers = () => {
               .map((retailer, index) => {
                 return (
                   <>
-                    <tr>
-                      <th scope="row">{index + 1}</th>
-                      <td>{retailer.name}</td>
-                      <td>
-                        <img
-                          style={{
-                            width: "80px",
-                            height: "50px",
-                            objectFit: "contain",
-                          }}
-                          src={retailer.logo}
-                          alt=""
-                        />
-                      </td>
-                      <td>{retailer.subdomain}</td>
-                      <td>{retailer.category}</td>
-                      <td>
-                        <button
-                          className="edit_btn_purple"
-                          data-bs-toggle="offcanvas"
-                          data-bs-target={`#staticBackdropUpdate${index}`}
-                          aria-controls="staticBackdrop"
-                          onClick={() => setUpdateData(retailer)}
-                        >
-                          Edit
-                        </button>
-                      </td>
-                    </tr>
                     <div
                       class="offcanvas offcanvas-end"
                       data-bs-backdrop="static"
@@ -504,26 +475,12 @@ const Retailers = () => {
                               })
                             }
                           >
-                            {/* <option selected value={retailer.id}>{retailer.id}</option> */}
                             <option value="">Select Categories</option>
                             <option value="Parsonal Care">Personal Care</option>
                             <option value="Baby Care">Baby Care</option>
                           </select>
                         </div>
-                        {/* <div className="input_box mt-3">
-                <label htmlFor="email" className="input_label">
-                  Balance
-                </label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="email"
-                  value={addData.max_invites}
-                  // onChange={(e) =>
-                  //   setAddData({ ...addData, Balance: e.target.value })
-                  // }
-                ></input>
-              </div> */}
+
                         <div className="d-flex justify-content-center mt-5">
                           <button
                             type="submit"
@@ -545,6 +502,34 @@ const Retailers = () => {
                         </div>
                       </div>
                     </div>
+                    <tr>
+                      <th scope="row">{index + 1}</th>
+                      <td>{retailer.name}</td>
+                      <td>
+                        <img
+                          style={{
+                            width: "80px",
+                            height: "50px",
+                            objectFit: "contain",
+                          }}
+                          src={retailer.logo}
+                          alt=""
+                        />
+                      </td>
+                      <td>{retailer.subdomain}</td>
+                      <td>{retailer.category}</td>
+                      <td>
+                        <button
+                          className="edit_btn_purple"
+                          data-bs-toggle="offcanvas"
+                          data-bs-target={`#staticBackdropUpdate${index}`}
+                          aria-controls="staticBackdrop"
+                          onClick={() => setUpdateData(retailer)}
+                        >
+                          Edit
+                        </button>
+                      </td>
+                    </tr>
                   </>
                 );
               })}

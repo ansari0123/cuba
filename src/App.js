@@ -15,6 +15,7 @@ import Users from './pages/masters/Users';
 import BoardingScreens from './pages/masters/BoardingScreens';
 import TaskType from './pages/masters/TaskType';
 import CampaignWizard from './pages/masters/CampaignWizard';
+import Campaign from './pages/Campaign';
 function App() {
   const login = localStorage.getItem('login');
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path='task_types' element={login?<></>:<TaskType/>}/>
           </Route>
           <Route exact path='/campaign_wizard' element={<CampaignWizard/>}/>
+          <Route exact path='/campaigns' element={<Campaign/>}/>
         </Routes>
         
        
