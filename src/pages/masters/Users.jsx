@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import campaign from "../../assets/images/campaign.svg";
 import { useDownloadExcel } from "react-export-table-to-excel";
 import ReactPaginate from "react-paginate";
+import * as XLSX from "xlsx";
+
 const Users = () => {
   const [Users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,6 +20,43 @@ const Users = () => {
     filename: "user_list",
     sheet: "Users",
   });
+  // ======================================= export function starts=========================
+  const onHandleExport = () => {
+    var excelData = [
+      [
+        "#",
+        "USERS",
+        "MOBILE_NUMBER",
+        "AGE",
+        "GENDER",
+        "OCCUPATION",
+        "SHOPPING PREFFERENCE",
+        "INVITE CODE",
+        "STATUS",
+      ],
+    ];
+
+    Users.map((elt, index) => {
+      console.log(elt);
+      excelData.push([
+        index + 1,
+        elt.name,
+        elt.phone,
+        getAge(elt.date_of_birth),
+        elt.gender,
+        elt.occupation,
+        elt.shopping_prefernce,
+        elt.invite_code,
+        elt.status,
+      ]);
+    });
+    var wb = XLSX.utils.book_new(),
+      ws = XLSX.utils.aoa_to_sheet(excelData);
+
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet 1");
+    XLSX.writeFile(wb, "users_list.xlsx");
+  };
+  // ======================================= export function ends=========================
   const fetchWaitingUserList = async () => {
     const resp = await axios.get("/allusers", {
       headers: {
@@ -89,7 +128,7 @@ const Users = () => {
           onChange={(e) => setSearchUser(e.target.value)}
         />
         <div className="options d-flex align-items-center">
-          <button className="export_btn me-5" onClick={onDownload}>
+          <button className="export_btn me-5" onClick={onHandleExport}>
             Export
           </button>
           {/*  <select className="option_select">
@@ -97,7 +136,6 @@ const Users = () => {
             <option value="20">20</option>
             <option value="30">30</option>
           </select>*/}
-         
         </div>
       </div>
 

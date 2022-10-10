@@ -5,12 +5,46 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import { useDownloadExcel } from "react-export-table-to-excel";
 import ReactPaginate from "react-paginate";
+import * as XLSX from "xlsx";
 
 const WaitingList = () => {
   const [Users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
   const [searchkey, setSearchKey] = useState("");
+
+  // ========================================== export  function starts================
+
+  const onHandleExport = () => {
+    var excelData = [
+      [
+        "#",
+        "USER_NAME",
+        "MOBILE_NUMBER",
+        "WAITING_SINCE",
+        "STATUS",
+        "INVITE_CODES",
+      ],
+    ];
+
+    Users.map((elt, index) => {
+      console.log(elt);
+      excelData.push([
+        index + 1,
+        elt.name,
+        elt.phone,
+        elt.created_at,
+        "pending",
+        elt.invite_code,
+      ]);
+    });
+    var wb = XLSX.utils.book_new(),
+      ws = XLSX.utils.aoa_to_sheet(excelData);
+
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet 1");
+    XLSX.writeFile(wb, "waiting_list.xlsx");
+  };
+  // ========================================== export  function starts================
 
   // export table
   const waiting_user_list = useRef();
@@ -78,7 +112,7 @@ const WaitingList = () => {
           onChange={(e) => setSearchKey(e.target.value)}
         />
         <div className="options d-flex align-items-center">
-          <button className="export_btn me-5" onClick={onDownload}>
+          <button className="export_btn me-5" onClick={onHandleExport}>
             Export
           </button>
           {/* <select className="option_select">
@@ -86,7 +120,6 @@ const WaitingList = () => {
             <option value="20">20</option>
             <option value="30">30</option>
           </select> */}
-         
         </div>
       </div>
 

@@ -4,6 +4,8 @@ import add_plus from "../../assets/images/add_plus.svg";
 import upload_image from "../../assets/images/upload_image.svg";
 import swal from "sweetalert";
 import { useDownloadExcel } from "react-export-table-to-excel";
+import * as XLSX from "xlsx";
+
 import ReactPaginate from "react-paginate";
 const Retailers = () => {
   const [addData, setAddData] = useState({
@@ -16,13 +18,38 @@ const Retailers = () => {
   const [retailers, setRetailers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
+  const [userList, setUserList] = useState([]);
+
   const [addLoader, setAddLoader] = useState(false);
   const [updateData, setUpdateData] = useState({});
   const [updateLoader, setUpdateLoader] = useState(false);
   const [keywordSearch, setKeywordsSearch] = useState("");
   // const [getItem,setGetItem]=useState([])
+  const componentRef = useRef();
 
   // exporting table
+
+  const onHandleExport = () => {
+    var excelData = [["#", "NAME", "Sub-Domain", "Category"]];
+
+    retailers.map((elt, index) => {
+      console.log(elt);
+      excelData.push([
+        index + 1,
+        elt.name,
+        // elt.logo,
+        elt.subdomain,
+        elt.category,
+      ]);
+    });
+    var wb = XLSX.utils.book_new(),
+      ws = XLSX.utils.aoa_to_sheet(excelData);
+
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet 1");
+    XLSX.writeFile(wb, "retailers_list.xlsx");
+  };
+  /* export as EXCEL ends */
+
   const table_ref = useRef();
   const { onDownload } = useDownloadExcel({
     currentTableRef: table_ref.current,
@@ -305,8 +332,8 @@ const Retailers = () => {
             onChange={(e) => setKeywordsSearch(e.target.value)}
           />
           <div className="options d-flex align-items-center">
-            <button className="export_btn me-5" onClick={onDownload}>
-              Export
+            <button className="export_btn me-5" onClick={onHandleExport}>
+              Exports
             </button>
             {/*  <select className="option_select">
               <option value="10">10</option>
@@ -318,7 +345,7 @@ const Retailers = () => {
         {/* =========== OPTION BAR ENDS =================== */}
 
         {/* =========== TABLE STARTS ====================== */}
-        <table class="table mt-3" ref={table_ref}>
+        <table class="table mt-3">
           <thead className="table_head">
             <tr>
               <th scope="col">#</th>
