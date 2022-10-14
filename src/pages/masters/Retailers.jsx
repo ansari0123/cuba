@@ -21,7 +21,9 @@ const Retailers = () => {
   const [userList, setUserList] = useState([]);
 
   const [addLoader, setAddLoader] = useState(false);
-  const [updateData, setUpdateData] = useState({});
+  const [updateData, setUpdateData] = useState({
+    logo:''
+  });
   const [updateLoader, setUpdateLoader] = useState(false);
   const [keywordSearch, setKeywordsSearch] = useState("");
   // const [getItem,setGetItem]=useState([])
@@ -58,7 +60,7 @@ const Retailers = () => {
   });
   const handleUpdate = async () => {
     setUpdateLoader(true);
-    debugger;
+
 
     //const img = document.
     const formData = new FormData();
@@ -143,6 +145,7 @@ const Retailers = () => {
     fetchAllRetailers();
   }, []);
 
+  console.log(updateData)
   // KeyWords Search
   // console.log(keywordSearch)
   // useEffect(()=>{
@@ -333,7 +336,7 @@ const Retailers = () => {
           />
           <div className="options d-flex align-items-center">
             <button className="export_btn me-5" onClick={onHandleExport}>
-              Exports
+              Export
             </button>
             {/*  <select className="option_select">
               <option value="10">10</option>
@@ -449,7 +452,7 @@ const Retailers = () => {
                                 })
                               }
                             />
-                            <label
+                            <label  
                               htmlFor="file"
                               className=" d-flex flex-column align-items-center justify-content-center"
                             >
@@ -462,7 +465,16 @@ const Retailers = () => {
                           <>
                             <div className=" image_preview mt-3">
                               <img
-                                src={`https://gru.wbl.mybluehostin.me/${retailer.logo}`}
+                              src={
+                                !(
+                                  typeof updateData["logo"] ===
+                                  "string"
+                                )
+                                  ? URL.createObjectURL(
+                                      updateData["logo"]
+                                    )
+                                  : updateData["logo"].startsWith('http')?updateData['logo']:'https://gru.wbl.mybluehostin.me/'+updateData['logo']
+                              }
                                 alt=""
                               />
                             </div>

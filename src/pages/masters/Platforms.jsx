@@ -1003,6 +1003,762 @@ const Platforms = () => {
                       </div>
                     </td>
                   </tr>
+                  {/*===================== update modal starts ==========*/}
+                  <div
+                  class="modal fade"
+                  id={`exampleModal`}
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered user_modal">
+                    <div class="modal-content user_modal_content p-2">
+                      <div class="modal-header  border-0 d-flex justify-content-center">
+                        <h3 className="">Update Platform</h3>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div class="modal-body  ">
+                        {step == 1 ? (
+                          <>
+                            <div className="step_container">
+                              <div className="row">
+                                <div className="col-6">
+                                  <div className="input_box mt-3">
+                                    <label htmlFor="email" className="input_label">
+                                      Retailer
+                                    </label>
+                                    <input
+                                      type="email"
+                                      class="form-control"
+                                      id="email"
+                                      value={addDataPlatform.name}
+                                      onChange={(e) =>
+                                        setAddDataPlatform({
+                                          ...addDataPlatform,
+                                          name: e.target.value,
+                                        })
+                                      }
+                                    ></input>
+                                  </div>
+                                  <div className="input_box mt-3">
+                                    <label htmlFor="email" className="input_label">
+                                      Logo
+                                    </label>
+                                    {/* <input
+                                      type="text"
+                                      class="form-control"
+                                      id="email"
+                                       value={addDataPlatform.logo}
+                                      onChange={(e) =>
+                                        setAddDataPlatform({
+                                          ...addDataPlatform,
+                                          logo: e.target.files[0],
+                                        })
+                                      }
+                                    ></input> */}
+                                    <div className="upload_box">
+                                      <input
+                                        type="file"
+                                        name="file"
+                                        id="file"
+                                        onChange={(e) =>
+                                          setAddDataPlatform({
+                                            ...addDataPlatform,
+                                            logo: e.target.files[0],
+                                          })
+                                        }
+                                      />
+                                      <label
+                                        htmlFor="file"
+                                        className=" d-flex flex-column align-items-center justify-content-center"
+                                      >
+                                        <img src={upload_image} alt="" />
+                                        <span>Upload Image </span>
+                                      </label>
+                                    </div>
+                                    {addDataPlatform.logo ? (
+                                      <>
+                                        <div className=" image_preview mt-3">
+                                          <img
+                                            src={URL.createObjectURL(
+                                              addDataPlatform.logo,
+                                            )}
+                                            alt=""
+                                          />
+                                        </div>
+                                      </>
+                                    ) : (
+                                      <></>
+                                    )}
+                                  </div>
+                                  <div className="input_box mt-3">
+                                    <label htmlFor="text" className="input_label">
+                                      Description
+                                    </label>
+                                    <textarea
+                                      type="text"
+                                      class="form-control"
+                                      id="text"
+                                      value={addDataPlatform.description}
+                                      onChange={(e) =>
+                                        setAddDataPlatform({
+                                          ...addDataPlatform,
+                                          description: e.target.value,
+                                        })
+                                      }
+                                    ></textarea>
+                                  </div>
+                                  <div className="input_box mt-3">
+                                    <label htmlFor="email" className="input_label">
+                                      URL
+                                    </label>
+                                    <input
+                                      type="url"
+                                      class="form-control"
+                                      id="email"
+                                      value={addDataPlatform.url}
+                                      onChange={(e) =>
+                                        setAddDataPlatform({
+                                          ...addDataPlatform,
+                                          url: e.target.value,
+                                        })
+                                      }
+                                    ></input>
+                                  </div>{' '}
+                                  <div className="input_box mt-3">
+                                    <label htmlFor="email" className="input_label">
+                                      Order ScreensShots
+                                    </label>
+                                    <div className="radio-holder d-flex">
+                                      <div className="radio_box">
+                                        <input
+                                          type="radio"
+                                          name="order"
+                                          id="order1"
+                                        />
+                                        <label htmlFor="order1">1</label>
+                                      </div>
+                                      <div className="radio_box">
+                                        <input
+                                          type="radio"
+                                          name="order"
+                                          id="order2"
+                                        />
+                                        <label htmlFor="order2">2</label>
+                                      </div>
+                                      <div className="radio_box">
+                                        <input
+                                          type="radio"
+                                          name="order"
+                                          id="order3"
+                                        />
+                                        <label htmlFor="order3">3</label>
+                                      </div>
+                                      <div className="radio_box">
+                                        <input
+                                          type="radio"
+                                          name="order"
+                                          id="order4"
+                                        />
+                                        <label htmlFor="order4">4</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="col-6">
+                                  <div className="input_box mt-3">
+                                    <label htmlFor="email" className="input_label">
+                                      Order Instructions for App
+                                    </label>
+                                    <textarea
+                                      type="email"
+                                      class="form-control"
+                                      id="email"
+                                      value={addDataPlatform.app_instructions}
+                                      onChange={(e) =>
+                                        setAddDataPlatform({
+                                          ...addDataPlatform,
+                                          app_instructions: e.target.value,
+                                        })
+                                      }
+                                    ></textarea>
+                                  </div>
+                                  <div className="input_box mt-3">
+                                    <label htmlFor="email" className="input_label">
+                                      Order Instructions for mweb
+                                    </label>
+                                    <textarea
+                                      type="email"
+                                      class="form-control"
+                                      id="email"
+                                      value={addDataPlatform.mweb_instructions}
+                                      onChange={(e) =>
+                                        setAddDataPlatform({
+                                          ...addDataPlatform,
+                                          mweb_instructions: e.target.value,
+                                        })
+                                      }
+                                    ></textarea>
+                                  </div>
+                                  <div className="input_box mt-3">
+                                    <label htmlFor="email" className="input_label">
+                                      Order Instructions for web
+                                    </label>
+                                    <textarea
+                                      type="email"
+                                      class="form-control"
+                                      id="email"
+                                      value={addDataPlatform.web_instructions}
+                                      onChange={(e) =>
+                                        setAddDataPlatform({
+                                          ...addDataPlatform,
+                                          web_instructions: e.target.value,
+                                        })
+                                      }
+                                    ></textarea>
+                                  </div>
+                                  <div className="input_box mt-3">
+                                    <label htmlFor="email" className="input_label">
+                                      Review Instructions
+                                    </label>
+                                    <textarea
+                                      type="email"
+                                      class="form-control"
+                                      id="email"
+                                      value={addDataPlatform.review_instructions}
+                                      onChange={(e) =>
+                                        setAddDataPlatform({
+                                          ...addDataPlatform,
+                                          review_instructions: e.target.value,
+                                        })
+                                      }
+                                    ></textarea>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="d-flex justify-content-end align-items-center">
+                                <button
+                                  className="action_btn"
+                                  onClick={() => setStep(2)}
+                                >
+                                  Next
+                                </button>
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            {/* =========== SECOND STEP STARTS HERE ========== */}
+      
+                            <div className="row">
+                              <div className="col-4">
+                                <div className="input_container">
+                                  <h5
+                                    className="text-center"
+                                    style={{
+                                      color: '#000000',
+                                      fontSize: '16px',
+                                      fontWeight: '700',
+                                    }}
+                                  >
+                                    Order
+                                  </h5>
+                                  <div className="input_box mt-3 tut_input">
+                                    <label htmlFor="email" className="input_label">
+                                      App ScreenShot
+                                    </label>
+                                    {/* <div className="upload_box">
+                                      <input type="file" name="file" id="file" />
+                                      <label
+                                        htmlFor="file"
+                                        className=" d-flex align-items-center justify-content-start p-2 "
+                                        style={{ height: '50px' }}
+                                      >
+                                        <img
+                                          src={upload_image}
+                                          alt=""
+                                          className="me-2"
+                                        />
+                                        <span>Upload Image </span>
+                                      </label>
+                                    </div> */}
+                                    <div className="upload_box">
+                                      <input
+                                        type="file"
+                                        name="file"
+                                        id="file"
+                                        onChange={(e) =>
+                                          setAddDataPlatform({
+                                            ...addDataPlatform,
+                                            order_app_shots: e.target.files[0],
+                                          })
+                                        }
+                                      />
+                                      <label
+                                        htmlFor="file"
+                                        className=" d-flex flex-column align-items-center justify-content-center"
+                                      >
+                                        <img src={upload_image} alt="" />
+                                        <span>Upload Image </span>
+                                      </label>
+                                    </div>
+                                    {addDataPlatform.order_app_shots ? (
+                                      <>
+                                        <div className=" image_preview mt-3">
+                                          <img
+                                            src={URL.createObjectURL(
+                                              addDataPlatform.order_app_shots,
+                                            )}
+                                            alt=""
+                                          />
+                                        </div>
+                                      </>
+                                    ) : (
+                                      <></>
+                                    )}
+                                  </div>
+                                  <div className="input_box mt-3 tut_input">
+                                    <label htmlFor="file1" className="input_label">
+                                      mWeb ScreenShot
+                                    </label>
+                                    {/* <div className="upload_box">
+                                      <input type="file" name="file" id="file" />
+                                      <label
+                                        htmlFor="file"
+                                        className=" d-flex align-items-center justify-content-start p-2 "
+                                        style={{ height: '50px' }}
+                                      >
+                                        <img
+                                          src={upload_image}
+                                          alt=""
+                                          className="me-2"
+                                        />
+                                        <span>Upload Image </span>
+                                      </label>
+                                    </div> */}
+                                    <div className="upload_box">
+                                      <input
+                                        type="file"
+                                        name="file"
+                                        id="file1"
+                                        onChange={(e) =>
+                                          setAddDataPlatform({
+                                            ...addDataPlatform,
+                                            order_mweb_shots: e.target.files[0],
+                                          })
+                                        }
+                                      />
+                                      <label
+                                        htmlFor="file1"
+                                        className=" d-flex flex-column align-items-center justify-content-center"
+                                      >
+                                        <img src={upload_image} alt="" />
+                                        <span>Upload Image </span>
+                                      </label>
+                                    </div>
+                                    {addDataPlatform.order_mweb_shots ? (
+                                      <>
+                                        <div className=" image_preview mt-3">
+                                          <img
+                                            src={URL.createObjectURL(
+                                              addDataPlatform.order_mweb_shots,
+                                            )}
+                                            alt=""
+                                          />
+                                        </div>
+                                      </>
+                                    ) : (
+                                      <></>
+                                    )}
+                                  </div>
+                                  <div className="input_box mt-3 tut_input">
+                                    <label htmlFor="file2" className="input_label">
+                                      Desktop Web ScreenShot
+                                    </label>
+                                    <div className="upload_box">
+                                      <input
+                                        type="file"
+                                        name="file"
+                                        id="file2"
+                                        onChange={(e) =>
+                                          setAddDataPlatform({
+                                            ...addDataPlatform,
+                                            order_web_shots: e.target.files[0],
+                                          })
+                                        }
+                                      />
+                                      <label
+                                        htmlFor="file2"
+                                        className=" d-flex flex-column align-items-center justify-content-center"
+                                      >
+                                        <img src={upload_image} alt="" />
+                                        <span>Upload Image </span>
+                                      </label>
+                                    </div>
+                                    {addDataPlatform.order_web_shots ? (
+                                      <>
+                                        <div className=" image_preview mt-3">
+                                          <img
+                                            src={URL.createObjectURL(
+                                              addDataPlatform.order_web_shots,
+                                            )}
+                                            alt=""
+                                          />
+                                        </div>
+                                      </>
+                                    ) : (
+                                      <></>
+                                    )}
+                                  </div>
+                                  <div className="input_box mt-3 tut_input">
+                                    <label htmlFor="email" className="input_label">
+                                      Video Tutorial
+                                    </label>
+                                    <div className="upload_box">
+                                      <input type="file" name="file" id="file" />
+                                      <label
+                                        htmlFor="file"
+                                        className=" d-flex align-items-center justify-content-start p-2 "
+                                        style={{ height: '50px' }}
+                                      >
+                                        <img
+                                          src={upload_image}
+                                          alt=""
+                                          className="me-2"
+                                        />
+                                        <span>Upload Image </span>
+                                      </label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="col-4">
+                                <div className="input_container">
+                                  <h5
+                                    className="text-center"
+                                    style={{
+                                      color: '#000000',
+                                      fontSize: '16px',
+                                      fontWeight: '700',
+                                    }}
+                                  >
+                                    Delivery
+                                  </h5>
+                                  <div className="input_box mt-3 tut_input">
+                                    <label htmlFor="file6" className="input_label">
+                                      App ScreenShot
+                                    </label>
+                                    <div className="upload_box">
+                                      <input
+                                        type="file"
+                                        name="file"
+                                        id="file5"
+                                        onChange={(e) =>
+                                          setAddDataPlatform({
+                                            ...addDataPlatform,
+                                            delivery_app_shots: e.target.files[0],
+                                          })
+                                        }
+                                      />
+                                      <label
+                                        htmlFor="file5"
+                                        className=" d-flex flex-column align-items-center justify-content-center"
+                                      >
+                                        <img src={upload_image} alt="" />
+                                        <span>Upload Image </span>
+                                      </label>
+                                    </div>
+                                    {addDataPlatform.delivery_app_shots ? (
+                                      <>
+                                        <div className=" image_preview mt-3">
+                                          <img
+                                            src={URL.createObjectURL(
+                                              addDataPlatform.delivery_app_shots,
+                                            )}
+                                            alt=""
+                                          />
+                                        </div>
+                                      </>
+                                    ) : (
+                                      <></>
+                                    )}
+                                  </div>
+                                  <div className="input_box mt-3 tut_input">
+                                    <label htmlFor="email" className="input_label">
+                                      mWeb ScreenShot
+                                    </label>
+                                    <div className="upload_box">
+                                      <input
+                                        type="file"
+                                        name="file"
+                                        id="file6"
+                                        onChange={(e) =>
+                                          setAddDataPlatform({
+                                            ...addDataPlatform,
+                                            delivery_mweb_shots: e.target.files[0],
+                                          })
+                                        }
+                                      />
+                                      <label
+                                        htmlFor="file6"
+                                        className=" d-flex flex-column align-items-center justify-content-center"
+                                      >
+                                        <img src={upload_image} alt="" />
+                                        <span>Upload Image </span>
+                                      </label>
+                                    </div>
+                                    {addDataPlatform.delivery_mweb_shots ? (
+                                      <>
+                                        <div className=" image_preview mt-3">
+                                          <img
+                                            src={URL.createObjectURL(
+                                              addDataPlatform.delivery_mweb_shots,
+                                            )}
+                                            alt=""
+                                          />
+                                        </div>
+                                      </>
+                                    ) : (
+                                      <></>
+                                    )}
+                                  </div>
+                                  <div className="input_box mt-3 tut_input">
+                                    <label htmlFor="file7" className="input_label">
+                                      Desktop Web ScreenShot
+                                    </label>
+                                    <div className="upload_box">
+                                      <input
+                                        type="file"
+                                        name="file"
+                                        id="file7"
+                                        onChange={(e) =>
+                                          setAddDataPlatform({
+                                            ...addDataPlatform,
+                                            delivery_web_shots: e.target.files[0],
+                                          })
+                                        }
+                                      />
+                                      <label
+                                        htmlFor="file7"
+                                        className=" d-flex flex-column align-items-center justify-content-center"
+                                      >
+                                        <img src={upload_image} alt="" />
+                                        <span>Upload Image </span>
+                                      </label>
+                                    </div>
+                                    {addDataPlatform.delivery_web_shots ? (
+                                      <>
+                                        <div className=" image_preview mt-3">
+                                          <img
+                                            src={URL.createObjectURL(
+                                              addDataPlatform.delivery_web_shots,
+                                            )}
+                                            alt=""
+                                          />
+                                        </div>
+                                      </>
+                                    ) : (
+                                      <></>
+                                    )}
+                                  </div>
+                                  <div className="input_box mt-3 tut_input">
+                                    <label htmlFor="email" className="input_label">
+                                      Video Tutorial
+                                    </label>
+                                    <div className="upload_box">
+                                      <input type="file" name="file" id="file" />
+                                      <label
+                                        htmlFor="file"
+                                        className=" d-flex align-items-center justify-content-start p-2 "
+                                        style={{ height: '50px' }}
+                                      >
+                                        <img
+                                          src={upload_image}
+                                          alt=""
+                                          className="me-2"
+                                        />
+                                        <span>Upload Image </span>
+                                      </label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="col-4">
+                                <div className="input_container">
+                                  <h5
+                                    className="text-center"
+                                    style={{
+                                      color: '#000000',
+                                      fontSize: '16px',
+                                      fontWeight: '700',
+                                    }}
+                                  >
+                                    Review
+                                  </h5>
+                                  <div className="input_box mt-3 tut_input">
+                                    <label htmlFor="file8" className="input_label">
+                                      App ScreenShot
+                                    </label>
+                                    <div className="upload_box">
+                                      <input
+                                        type="file"
+                                        name="file"
+                                        id="file8"
+                                        onChange={(e) =>
+                                          setAddDataPlatform({
+                                            ...addDataPlatform,
+                                            review_app_shots: e.target.files[0],
+                                          })
+                                        }
+                                      />
+                                      <label
+                                        htmlFor="file8"
+                                        className=" d-flex flex-column align-items-center justify-content-center"
+                                      >
+                                        <img src={upload_image} alt="" />
+                                        <span>Upload Image </span>
+                                      </label>
+                                    </div>
+                                    {addDataPlatform.review_app_shots ? (
+                                      <>
+                                        <div className=" image_preview mt-3">
+                                          <img
+                                            src={URL.createObjectURL(
+                                              addDataPlatform.review_app_shots,
+                                            )}
+                                            alt=""
+                                          />
+                                        </div>
+                                      </>
+                                    ) : (
+                                      <></>
+                                    )}
+                                  </div>
+                                  <div className="input_box mt-3 tut_input">
+                                    <label htmlFor="file9" className="input_label">
+                                      mWeb ScreenShot
+                                    </label>
+                                    <div className="upload_box">
+                                      <input
+                                        type="file"
+                                        name="file"
+                                        id="file9"
+                                        onChange={(e) =>
+                                          setAddDataPlatform({
+                                            ...addDataPlatform,
+                                            review_mweb_shots: e.target.files[0],
+                                          })
+                                        }
+                                      />
+                                      <label
+                                        htmlFor="file9"
+                                        className=" d-flex flex-column align-items-center justify-content-center"
+                                      >
+                                        <img src={upload_image} alt="" />
+                                        <span>Upload Image </span>
+                                      </label>
+                                    </div>
+                                    {addDataPlatform.review_mweb_shots ? (
+                                      <>
+                                        <div className=" image_preview mt-3">
+                                          <img
+                                            src={URL.createObjectURL(
+                                              addDataPlatform.review_mweb_shots,
+                                            )}
+                                            alt=""
+                                          />
+                                        </div>
+                                      </>
+                                    ) : (
+                                      <></>
+                                    )}
+                                  </div>
+                                  <div className="input_box mt-3 tut_input">
+                                    <label htmlFor="file10" className="input_label">
+                                      Desktop Web ScreenShot
+                                    </label>
+                                    <div className="upload_box">
+                                      <input
+                                        type="file"
+                                        name="file"
+                                        id="file10"
+                                        onChange={(e) =>
+                                          setAddDataPlatform({
+                                            ...addDataPlatform,
+                                            review_web_shots: e.target.files[0],
+                                          })
+                                        }
+                                      />
+                                      <label
+                                        htmlFor="file10"
+                                        className=" d-flex flex-column align-items-center justify-content-center"
+                                      >
+                                        <img src={upload_image} alt="" />
+                                        <span>Upload Image </span>
+                                      </label>
+                                    </div>
+                                    {addDataPlatform.review_web_shots ? (
+                                      <>
+                                        <div className=" image_preview mt-3">
+                                          <img
+                                            src={URL.createObjectURL(
+                                              addDataPlatform.review_web_shots,
+                                            )}
+                                            alt=""
+                                          />
+                                        </div>
+                                      </>
+                                    ) : (
+                                      <></>
+                                    )}
+                                  </div>
+                                  <div className="input_box mt-3 tut_input">
+                                    <label htmlFor="email" className="input_label">
+                                      Video Tutorial
+                                    </label>
+                                    <div className="upload_box">
+                                      <input type="file" name="file" id="file" />
+                                      <label
+                                        htmlFor="file"
+                                        className=" d-flex align-items-center justify-content-start p-2 "
+                                        style={{ height: '50px' }}
+                                      >
+                                        <img
+                                          src={upload_image}
+                                          alt=""
+                                          className="me-2"
+                                        />
+                                        <span>Upload Image </span>
+                                      </label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="col-12 d-flex align-items-center justify-content-end mt-3">
+                                <button className="action_btn me-3">Previous</button>
+                                <button
+                                  onClick={handlePlatform}
+                                  className="action_btn"
+                                >
+                                  Submit
+                                </button>
+                              </div>
+                            </div>
+      
+                            {/* =========== SECOND STEP ENDS HERE ========== */}
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  
+                  {/*===================== update modal ends ==========*/}
                 </>
               )
             })}

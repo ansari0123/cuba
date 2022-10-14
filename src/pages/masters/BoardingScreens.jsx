@@ -102,7 +102,7 @@ const BoardingScreens = () => {
     if (formData) {
       try {
         const resp = await axios
-          .post("/uspscreen/update", formData, {
+          .put("/uspscreen/update", formData, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
